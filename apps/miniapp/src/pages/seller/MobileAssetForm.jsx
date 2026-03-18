@@ -21,18 +21,18 @@ import {
 import { useNavigate } from 'react-router-dom';
 
 const MEDIA_TYPES = [
-  { id: 'instagram', label: 'Instagram', icon: Instagram, color: 'text-pink-600', bg: 'bg-pink-50' },
-  { id: 'tiktok', label: 'TikTok', icon: Music, color: 'text-black', bg: 'bg-gray-100' },
-  { id: 'youtube', label: 'YouTube', icon: Youtube, color: 'text-red-600', bg: 'bg-red-50' },
-  { id: 'telegram_channel', label: 'Telegram Channel', icon: MessageSquare, color: 'text-blue-500', bg: 'bg-blue-50' },
-  { id: 'telegram_bot', label: 'Telegram Bot', icon: MessageSquare, color: 'text-blue-600', bg: 'bg-blue-100' },
-  { id: 'billboard', label: 'Billboard', icon: Layout, color: 'text-purple-600', bg: 'bg-purple-50' },
-  { id: 'led_monitor', label: 'LED Monitor', icon: Monitor, color: 'text-indigo-600', bg: 'bg-indigo-50' },
-  { id: 'website', label: 'Website', icon: Globe, color: 'text-green-600', bg: 'bg-green-50' },
-  { id: 'mobile_app', label: 'Mobile App', icon: Smartphone, color: 'text-gray-700', bg: 'bg-gray-100' },
-  { id: 'bus_transit', label: 'Avtobus (Avto)', icon: Bus, color: 'text-orange-600', bg: 'bg-orange-50' },
-  { id: 'events', label: 'Tadbirlarda', icon: Calendar, color: 'text-emerald-600', bg: 'bg-emerald-50' },
-  { id: 'consultation', label: 'Maslahatlarda', icon: Users, color: 'text-indigo-600', bg: 'bg-indigo-50' },
+  { id: 'instagram', label: 'Instagram', icon: Instagram, color: 'text-pink-400', bg: 'bg-pink-500/10' },
+  { id: 'tiktok', label: 'TikTok', icon: Music, color: 'text-white', bg: 'bg-white/10' },
+  { id: 'youtube', label: 'YouTube', icon: Youtube, color: 'text-red-400', bg: 'bg-red-500/10' },
+  { id: 'telegram_channel', label: 'Telegram Channel', icon: MessageSquare, color: 'text-blue-400', bg: 'bg-blue-500/10' },
+  { id: 'telegram_bot', label: 'Telegram Bot', icon: MessageSquare, color: 'text-blue-400', bg: 'bg-blue-500/20' },
+  { id: 'billboard', label: 'Billboard', icon: Layout, color: 'text-purple-400', bg: 'bg-purple-500/10' },
+  { id: 'led_monitor', label: 'LED Monitor', icon: Monitor, color: 'text-indigo-400', bg: 'bg-indigo-500/10' },
+  { id: 'website', label: 'Website', icon: Globe, color: 'text-green-400', bg: 'bg-green-500/10' },
+  { id: 'mobile_app', label: 'Mobile App', icon: Smartphone, color: 'text-gray-300', bg: 'bg-gray-500/10' },
+  { id: 'bus_transit', label: 'Avtobus (Avto)', icon: Bus, color: 'text-orange-400', bg: 'bg-orange-500/10' },
+  { id: 'events', label: 'Tadbirlarda', icon: Calendar, color: 'text-emerald-400', bg: 'bg-emerald-500/10' },
+  { id: 'consultation', label: 'Maslahatlarda', icon: Users, color: 'text-indigo-400', bg: 'bg-indigo-500/10' },
 ];
 
 const LANGUAGES = {
@@ -260,21 +260,21 @@ const MobileAssetForm = () => {
   };
 
   return (
-    <div className="bg-white min-h-screen pb-24 text-gray-900">
+    <div className="bg-brand-bg min-h-screen pb-24 text-brand-text">
       {/* Mobile Top Bar */}
-      <div className="p-4 flex items-center justify-between border-b border-gray-100 bg-white sticky top-0 z-50">
+      <div className="p-4 flex items-center justify-between border-b border-brand-border bg-brand-bg/90 backdrop-blur-lg sticky top-0 z-50">
         <div className="flex items-center">
-          <button onClick={() => currentStep === 1 ? navigate(-1) : prevStep()} className="p-1 -ml-1">
+          <button onClick={() => currentStep === 1 ? navigate(-1) : prevStep()} className="p-1 -ml-1 text-brand-text">
             <ChevronLeft className="w-6 h-6" />
           </button>
-          <h1 className="ml-2 font-bold text-lg">{t.title}</h1>
+          <h1 className="ml-2 font-bold text-lg text-brand-text">{t.title}</h1>
         </div>
         <div className="flex space-x-1">
           {['UZ', 'RU', 'ENG'].map(l => (
             <button 
               key={l}
               onClick={() => setLang(l)}
-              className={`px-2 py-1 rounded-md text-[10px] font-black transition-all ${lang === l ? 'bg-accent text-white' : 'bg-gray-100 text-gray-400'}`}
+              className={`px-2 py-1 rounded-md text-[10px] font-black transition-all ${lang === l ? 'bg-brand-primary text-black' : 'bg-brand-card border border-brand-border text-brand-muted hover:text-brand-text'}`}
             >
               {l}
             </button>
@@ -286,7 +286,7 @@ const MobileAssetForm = () => {
         {/* Progress Dots */}
         <div className="flex justify-center space-x-2 mb-8">
           {[1, 2, 3, 4, 5].map(s => (
-            <div key={s} className={`h-1.5 rounded-full transition-all duration-300 ${currentStep === s ? 'w-8 bg-accent' : 'w-1.5 bg-gray-200'}`}></div>
+            <div key={s} className={`h-1.5 rounded-full transition-all duration-300 ${currentStep === s ? 'w-8 bg-brand-primary' : 'w-1.5 bg-brand-border'}`}></div>
           ))}
         </div>
 
@@ -297,21 +297,21 @@ const MobileAssetForm = () => {
           {currentStep === 1 && (
             <div className="space-y-6">
               <div>
-                <h2 className="text-2xl font-black">{t.type}</h2>
+                <h2 className="text-2xl font-black text-brand-text">{t.type}</h2>
               </div>
               <div className="grid grid-cols-2 gap-3 pb-8">
                 {MEDIA_TYPES.map((type) => (
                   <button
                     key={type.id}
                     onClick={() => handleMediaTypeSelect(type.id)}
-                    className={`flex flex-col items-center justify-center p-5 rounded-3xl border-2 transition-all active:scale-95 ${
-                      formData.media_type === type.id ? 'border-accent bg-accent-bg' : 'border-gray-50 bg-gray-50'
+                    className={`flex flex-col items-center justify-center p-5 rounded-3xl border transition-all active:scale-95 ${
+                      formData.media_type === type.id ? 'border-brand-primary bg-brand-primary/10 ring-2 ring-brand-primary/20' : 'border-brand-border bg-brand-card hover:border-brand-muted/40'
                     }`}
                   >
-                    <div className={`p-3 rounded-2xl bg-white shadow-sm mb-3 ${type.color}`}>
+                    <div className={`p-3 rounded-2xl bg-brand-bg shadow-inner border border-white/5 mb-3 ${type.color}`}>
                       <type.icon className="w-6 h-6" />
                     </div>
-                    <span className="text-xs font-bold text-gray-800">{type.label}</span>
+                    <span className={`text-xs font-bold ${formData.media_type === type.id ? 'text-brand-primary' : 'text-brand-text'}`}>{type.label}</span>
                   </button>
                 ))}
               </div>
@@ -321,15 +321,15 @@ const MobileAssetForm = () => {
           {/* Step 2: Basic Info */}
           {currentStep === 2 && (
             <div className="space-y-6">
-              <h2 className="text-2xl font-black capitalize">{formData.media_type.replace('_', ' ')} - {t.basic}</h2>
+              <h2 className="text-2xl font-black capitalize text-brand-text">{formData.media_type.replace('_', ' ')} - {t.basic}</h2>
               
               <div className="space-y-4">
                 <div className="space-y-1">
-                  <label className="text-xs font-bold text-gray-400 uppercase ml-1">{t.assetTitle}</label>
+                  <label className="text-xs font-bold text-brand-muted uppercase ml-1">{t.assetTitle}</label>
                   <input 
                     type="text" 
                     placeholder="Masalan: Lifestyle Blog" 
-                    className={`w-full bg-gray-50 border-none rounded-2xl py-4 px-5 text-sm outline-none focus:ring-2 focus:ring-accent ${errors.title ? 'ring-2 ring-red-400' : ''}`}
+                    className={`w-full bg-brand-card border border-brand-border rounded-2xl py-4 px-5 text-sm text-brand-text outline-none focus:ring-2 focus:ring-brand-primary focus:border-transparent ${errors.title ? 'ring-2 ring-red-500/50' : ''}`}
                     value={formData.title}
                     onChange={(e) => setFormData({...formData, title: sanitizeInput(e.target.value)})}
                   />
@@ -337,13 +337,13 @@ const MobileAssetForm = () => {
                 </div>
 
                 <div className="space-y-1">
-                  <label className="text-xs font-bold text-gray-400 uppercase ml-1">{t.category}</label>
+                  <label className="text-xs font-bold text-brand-muted uppercase ml-1">{t.category}</label>
                   <select 
-                    className={`w-full bg-gray-50 border-none rounded-2xl py-4 px-5 text-sm outline-none appearance-none focus:ring-2 focus:ring-accent ${errors.category ? 'ring-2 ring-red-400' : ''}`}
+                    className={`w-full bg-brand-card border border-brand-border rounded-2xl py-4 px-5 text-sm text-brand-text outline-none appearance-none focus:ring-2 focus:ring-brand-primary focus:border-transparent ${errors.category ? 'ring-2 ring-red-500/50' : ''}`}
                     value={formData.category}
                     onChange={(e) => setFormData({...formData, category: e.target.value})}
                   >
-                    <option value="">{t.category}</option>
+                    <option value="" className="text-brand-muted">{t.category}</option>
                     {(CATEGORIES_BY_LANG[lang][formData.media_type] || []).map(cat => (
                       <option key={cat} value={cat.toLowerCase()}>{cat}</option>
                     ))}
@@ -352,13 +352,13 @@ const MobileAssetForm = () => {
 
                 {['instagram', 'youtube', 'tiktok', 'telegram_channel'].includes(formData.media_type) && (
                   <div className="space-y-1">
-                    <label className="text-xs font-bold text-gray-400 uppercase ml-1">{t.socialLink}</label>
+                    <label className="text-xs font-bold text-brand-muted uppercase ml-1">{t.socialLink}</label>
                     <div className="relative">
-                      <Globe className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-300" />
+                      <Globe className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-brand-muted" />
                       <input 
                         type="text" 
                         placeholder="@username yoki link" 
-                        className={`w-full bg-gray-50 border-none rounded-2xl py-4 pl-12 pr-5 text-sm outline-none focus:ring-2 focus:ring-accent ${errors.social_link ? 'ring-2 ring-red-400' : ''}`}
+                        className={`w-full bg-brand-card border border-brand-border rounded-2xl py-4 pl-12 pr-5 text-sm text-brand-text outline-none focus:ring-2 focus:ring-brand-primary focus:border-transparent ${errors.social_link ? 'ring-2 ring-red-500/50' : ''}`}
                         value={formData.social_link}
                         onChange={(e) => setFormData({...formData, social_link: sanitizeInput(e.target.value)})}
                       />
@@ -368,10 +368,10 @@ const MobileAssetForm = () => {
                 )}
 
                 <div className="space-y-1">
-                  <label className="text-xs font-bold text-gray-400 uppercase ml-1">{t.description}</label>
+                  <label className="text-xs font-bold text-brand-muted uppercase ml-1">{t.description}</label>
                   <textarea 
                     rows="3"
-                    className={`w-full bg-gray-50 border-none rounded-2xl py-4 px-5 text-sm outline-none focus:ring-2 focus:ring-accent ${errors.description ? 'ring-2 ring-red-400' : ''}`}
+                    className={`w-full bg-brand-card border border-brand-border rounded-2xl py-4 px-5 text-sm text-brand-text outline-none focus:ring-2 focus:ring-brand-primary focus:border-transparent ${errors.description ? 'ring-2 ring-red-500/50' : ''}`}
                     value={formData.description}
                     onChange={(e) => setFormData({...formData, description: sanitizeInput(e.target.value)})}
                   ></textarea>
@@ -381,7 +381,7 @@ const MobileAssetForm = () => {
               {/* Explicit Continue button within page for extra clarity */}
               <button 
                 onClick={nextStep}
-                className="w-full py-4 bg-accent/10 text-accent rounded-2xl font-black text-sm transition-all active:scale-95 flex items-center justify-center"
+                className="w-full py-4 bg-brand-primary/10 text-brand-primary rounded-2xl font-black text-sm border border-brand-primary/20 transition-all active:scale-95 flex items-center justify-center"
               >
                 {t.next} <ChevronRight className="w-4 h-4 ml-2" />
               </button>
@@ -391,25 +391,25 @@ const MobileAssetForm = () => {
           {/* Step 3: Stats */}
           {currentStep === 3 && (
             <div className="space-y-6">
-              <h2 className="text-2xl font-black">{t.stats}</h2>
+              <h2 className="text-2xl font-black text-brand-text">{t.stats}</h2>
               <div className="space-y-4">
                 <div className="space-y-1">
-                  <label className="text-xs font-bold text-gray-400 uppercase ml-1">{t.followers}</label>
+                  <label className="text-xs font-bold text-brand-muted uppercase ml-1">{t.followers}</label>
                   <input 
                     type="number" 
                     placeholder="50000" 
-                    className={`w-full bg-gray-50 border-none rounded-2xl py-4 px-5 text-sm outline-none focus:ring-2 focus:ring-accent ${errors.followers ? 'ring-2 ring-red-400' : ''}`}
+                    className={`w-full bg-brand-card border border-brand-border rounded-2xl py-4 px-5 text-sm text-brand-text outline-none focus:ring-2 focus:ring-brand-primary focus:border-transparent ${errors.followers ? 'ring-2 ring-red-500/50' : ''}`}
                     value={formData.details.followers}
                     onChange={(e) => setFormData({...formData, details: {...formData.details, followers: e.target.value}})}
                   />
                   {errors.followers && <p className="text-[10px] text-red-500 ml-1">{errors.followers}</p>}
                 </div>
                 <div className="space-y-1">
-                  <label className="text-xs font-bold text-gray-400 uppercase ml-1">{t.reach}</label>
+                  <label className="text-xs font-bold text-brand-muted uppercase ml-1">{t.reach}</label>
                   <input 
                     type="number" 
                     placeholder="12000" 
-                    className={`w-full bg-gray-50 border-none rounded-2xl py-4 px-5 text-sm outline-none focus:ring-2 focus:ring-accent ${errors.avg_reach ? 'ring-2 ring-red-400' : ''}`}
+                    className={`w-full bg-brand-card border border-brand-border rounded-2xl py-4 px-5 text-sm text-brand-text outline-none focus:ring-2 focus:ring-brand-primary focus:border-transparent ${errors.avg_reach ? 'ring-2 ring-red-500/50' : ''}`}
                     value={formData.details.avg_reach}
                     onChange={(e) => setFormData({...formData, details: {...formData.details, avg_reach: e.target.value}})}
                   />
@@ -419,7 +419,7 @@ const MobileAssetForm = () => {
 
               <button 
                 onClick={nextStep}
-                className="w-full py-4 bg-accent/10 text-accent rounded-2xl font-black text-sm transition-all active:scale-95 flex items-center justify-center"
+                className="w-full py-4 bg-brand-primary/10 text-brand-primary rounded-2xl font-black text-sm border border-brand-primary/20 transition-all active:scale-95 flex items-center justify-center"
               >
                 {t.next} <ChevronRight className="w-4 h-4 ml-2" />
               </button>
@@ -429,16 +429,16 @@ const MobileAssetForm = () => {
           {/* Step 4: Pricing */}
           {currentStep === 4 && (
             <div className="space-y-6">
-              <h2 className="text-2xl font-black">{t.pricing}</h2>
+              <h2 className="text-2xl font-black text-brand-text">{t.pricing}</h2>
               <div className="space-y-4">
                 <div className="space-y-1">
-                  <label className="text-xs font-bold text-gray-400 uppercase ml-1">{t.priceLabel}</label>
+                  <label className="text-xs font-bold text-brand-muted uppercase ml-1">{t.priceLabel}</label>
                   <div className="relative">
-                    <DollarSign className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-300" />
+                    <DollarSign className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-brand-muted" />
                     <input 
                       type="number" 
                       placeholder="100" 
-                      className={`w-full bg-gray-50 border-none rounded-2xl py-4 pl-12 pr-5 text-sm outline-none focus:ring-2 focus:ring-accent ${errors.base_price ? 'ring-2 ring-red-400' : ''}`}
+                      className={`w-full bg-brand-card border border-brand-border rounded-2xl py-4 pl-12 pr-5 text-sm text-brand-text outline-none focus:ring-2 focus:ring-brand-primary focus:border-transparent ${errors.base_price ? 'ring-2 ring-red-500/50' : ''}`}
                       value={formData.pricing.base_price}
                       onChange={(e) => setFormData({...formData, pricing: {...formData.pricing, base_price: e.target.value}})}
                     />
@@ -447,18 +447,18 @@ const MobileAssetForm = () => {
                 </div>
                 <button 
                   onClick={() => setFormData({...formData, pricing: {...formData.pricing, negotiable: !formData.pricing.negotiable}})}
-                  className={`flex items-center space-x-3 p-4 w-full rounded-2xl transition-all ${formData.pricing.negotiable ? 'bg-accent-bg border-accent ring-1 ring-accent' : 'bg-gray-50 border-transparent'}`}
+                  className={`flex items-center space-x-3 p-4 w-full rounded-2xl transition-all border ${formData.pricing.negotiable ? 'bg-brand-primary/10 border-brand-primary ring-1 ring-brand-primary/50' : 'bg-brand-card border-brand-border'}`}
                 >
-                  <div className={`w-5 h-5 rounded-md flex items-center justify-center border ${formData.pricing.negotiable ? 'bg-accent border-accent' : 'bg-white border-gray-200'}`}>
-                    {formData.pricing.negotiable && <Check className="w-3.5 h-3.5 text-white" />}
+                  <div className={`w-5 h-5 rounded-md flex items-center justify-center border transition-all ${formData.pricing.negotiable ? 'bg-brand-primary border-brand-primary' : 'bg-brand-bg border-brand-muted'}`}>
+                    {formData.pricing.negotiable && <Check className="w-3.5 h-3.5 text-black" />}
                   </div>
-                  <span className="text-sm font-bold text-gray-700">{t.negotiable}</span>
+                  <span className={`text-sm font-bold ${formData.pricing.negotiable ? 'text-brand-primary' : 'text-brand-text'}`}>{t.negotiable}</span>
                 </button>
               </div>
 
               <button 
                 onClick={nextStep}
-                className="w-full py-4 bg-accent/10 text-accent rounded-2xl font-black text-sm transition-all active:scale-95 flex items-center justify-center"
+                className="w-full py-4 bg-brand-primary/10 text-brand-primary rounded-2xl font-black text-sm border border-brand-primary/20 transition-all active:scale-95 flex items-center justify-center"
               >
                 {t.next} <ChevronRight className="w-4 h-4 ml-2" />
               </button>
@@ -468,11 +468,11 @@ const MobileAssetForm = () => {
           {/* Step 5: Portfolio */}
           {currentStep === 5 && (
             <div className="space-y-6">
-              <h2 className="text-2xl font-black">{t.portfolio}</h2>
-              <div className="border-2 border-dashed border-gray-200 rounded-3xl p-10 text-center bg-gray-50 active:bg-gray-100 transition-all">
-                <ImageIcon className="w-10 h-10 text-gray-400 mx-auto mb-3" />
-                <p className="text-xs font-bold text-gray-500">{t.upload}</p>
-                <div className="mt-4 px-6 py-2 bg-white rounded-xl text-xs font-black shadow-sm inline-block border border-gray-100">
+              <h2 className="text-2xl font-black text-brand-text">{t.portfolio}</h2>
+              <div className="border-2 border-dashed border-brand-border rounded-3xl p-10 text-center bg-brand-card transition-all hover:border-brand-primary/50">
+                <ImageIcon className="w-10 h-10 text-brand-muted mx-auto mb-3" />
+                <p className="text-xs font-bold text-brand-muted mb-4">{t.upload}</p>
+                <div className="px-6 py-2 bg-brand-bg rounded-xl text-xs font-black text-brand-text border border-brand-border inline-block shadow-inner hover:bg-brand-border transition-colors">
                   {t.upload}
                 </div>
               </div>
@@ -482,11 +482,11 @@ const MobileAssetForm = () => {
       </div>
 
       {/* Fixed Bottom Action */}
-      <div className="fixed bottom-0 left-0 right-0 p-4 bg-white border-t border-gray-50 flex space-x-3">
+      <div className="fixed bottom-0 left-0 right-0 p-4 bg-brand-bg/90 backdrop-blur-lg border-t border-brand-border flex space-x-3">
         {currentStep > 1 && (
           <button 
             onClick={prevStep}
-            className="flex-1 py-4 bg-gray-100 text-gray-900 rounded-2xl font-black transition-all active:scale-95"
+            className="flex-1 py-4 bg-brand-card text-brand-text border border-brand-border rounded-2xl font-black transition-all active:scale-95"
           >
             {t.previous}
           </button>
@@ -494,7 +494,7 @@ const MobileAssetForm = () => {
         <button 
           onClick={currentStep === 5 ? handleCreate : nextStep}
           disabled={isLoading}
-          className={`flex-[2] py-4 bg-accent text-white rounded-2xl font-black shadow-lg shadow-accent/20 transition-all active:scale-95 ${isLoading ? 'opacity-50 grayscale' : ''}`}
+          className={`flex-[2] py-4 bg-brand-primary text-black rounded-2xl font-black shadow-lg shadow-brand-primary/20 transition-all active:scale-95 ${isLoading ? 'opacity-50 grayscale' : ''}`}
         >
           {isLoading ? '...' : (currentStep === 5 ? t.finish : t.next)}
         </button>

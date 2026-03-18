@@ -11,7 +11,7 @@ import MobileChat from './pages/buyer/MobileChat';
 import MobileDashboard from './pages/dashboard/MobileDashboard';
 import MobileRoleSelection from './pages/onboarding/MobileRoleSelection';
 
-function Messages() { return <div className="p-6 pb-24"><h1 className="text-2xl font-bold mb-4">Messages</h1><div className="bg-white p-4 rounded-xl shadow-sm">Barcha yozishmalar tez orada... (Mening kelishuvlarimdan chatni oching)</div></div>; }
+function Messages() { return <div className="p-6 pb-24 bg-brand-bg min-h-screen"><h1 className="text-2xl font-bold mb-4 text-brand-text">Messages</h1><div className="bg-brand-card border border-brand-border text-brand-muted p-4 rounded-xl shadow-[0_4px_20px_rgba(0,0,0,0.2)]">Barcha yozishmalar tez orada... (Mening kelishuvlarimdan chatni oching)</div></div>; }
 
 const RoleGate = ({ children, requiredRole }) => {
   const profileIdKey = requiredRole + '_profile_id';
@@ -19,14 +19,14 @@ const RoleGate = ({ children, requiredRole }) => {
   if (!profileId && profileId !== "undefined") {
     // Redirect logic
     return (
-      <div className="bg-[#fcfcfd] min-h-screen pb-24 flex items-center justify-center p-6 text-center">
+      <div className="bg-brand-bg min-h-screen pb-24 flex items-center justify-center p-6 text-center">
         <div>
-          <div className="w-16 h-16 bg-red-50 rounded-full flex items-center justify-center mx-auto mb-4">
+          <div className="w-16 h-16 bg-red-500/10 rounded-full flex items-center justify-center mx-auto mb-4 border border-red-500/30">
              <Briefcase className="w-8 h-8 text-red-500" />
           </div>
-          <h2 className="text-xl font-bold mb-2">Ruxsat etilmagan</h2>
-          <p className="text-gray-500 mb-6 font-medium text-sm">Siz ushbu bo'limga kirish uchun kerakli roldan ro'yxatdan o'tishingiz kerak.</p>
-          <Link to="/role-selection" className="bg-accent text-white px-6 py-3 rounded-2xl font-bold shadow-lg shadow-accent/20">
+          <h2 className="text-xl font-bold mb-2 text-brand-text">Ruxsat etilmagan</h2>
+          <p className="text-brand-muted mb-6 font-medium text-sm">Siz ushbu bo'limga kirish uchun kerakli roldan ro'yxatdan o'tishingiz kerak.</p>
+          <Link to="/role-selection" className="bg-brand-primary text-black px-6 py-3 rounded-2xl font-bold shadow-lg shadow-brand-primary/20 active:scale-95 transition-all">
             Ro'yxatdan o'tish
           </Link>
         </div>
@@ -41,31 +41,31 @@ const RoleGate = ({ children, requiredRole }) => {
 
 function Profile() { 
   return (
-    <div className="bg-[#fcfcfd] min-h-screen pb-24">
-      <div className="bg-white p-6 border-b border-gray-100 flex items-center mb-6">
-        <div className="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center text-accent font-black text-2xl mr-4">M</div>
+    <div className="bg-brand-bg min-h-screen pb-24">
+      <div className="bg-brand-card/90 backdrop-blur-md p-6 border-b border-brand-border flex items-center mb-6 shadow-lg">
+        <div className="w-16 h-16 bg-brand-primary/10 rounded-full flex items-center justify-center text-brand-primary font-black text-2xl mr-4 border border-brand-primary/20 shadow-lg shadow-brand-primary/10">M</div>
         <div>
-          <h1 className="text-xl font-black text-gray-900 leading-tight">MIDAS User</h1>
-          <p className="text-sm text-gray-500 font-medium">Ro'yxatdan o'ting yoki sozlang</p>
+          <h1 className="text-xl font-black text-brand-text leading-tight">MIDAS User</h1>
+          <p className="text-sm text-brand-muted font-medium">Ro'yxatdan o'ting yoki sozlang</p>
         </div>
       </div>
       
       <div className="px-4 space-y-4">
-        <Link to="/shortlist" className="bg-white p-4 rounded-2xl flex items-center justify-between shadow-sm border border-gray-50 hover:border-accent/20 transition-all active:scale-95">
-          <div className="flex items-center text-gray-700 font-bold"><Heart className="w-5 h-5 mr-3 text-red-500/80" /> Savat (Saqlanganlar)</div>
-          <ChevronRight className="w-5 h-5 text-gray-300"/>
+        <Link to="/shortlist" className="bg-brand-card p-4 rounded-2xl flex items-center justify-between shadow-[0_4px_20px_rgba(0,0,0,0.1)] border border-brand-border hover:border-brand-primary/50 transition-all active:scale-[0.98] group">
+          <div className="flex items-center text-brand-text font-bold"><Heart className="w-5 h-5 mr-3 text-red-500/80" /> Savat (Saqlanganlar)</div>
+          <ChevronRight className="w-5 h-5 text-brand-muted/50 group-hover:text-brand-primary transition-colors"/>
         </Link>
-        <Link to="/messages" className="bg-white p-4 rounded-2xl flex items-center justify-between shadow-sm border border-gray-50 hover:border-accent/20 transition-all active:scale-95">
-          <div className="flex items-center text-gray-700 font-bold"><MessageSquare className="w-5 h-5 mr-3 text-blue-500/80" /> Xabarlar (Chats)</div>
-          <ChevronRight className="w-5 h-5 text-gray-300"/>
+        <Link to="/messages" className="bg-brand-card p-4 rounded-2xl flex items-center justify-between shadow-[0_4px_20px_rgba(0,0,0,0.1)] border border-brand-border hover:border-brand-primary/50 transition-all active:scale-[0.98] group">
+          <div className="flex items-center text-brand-text font-bold"><MessageSquare className="w-5 h-5 mr-3 text-blue-500/80" /> Xabarlar (Chats)</div>
+          <ChevronRight className="w-5 h-5 text-brand-muted/50 group-hover:text-brand-primary transition-colors"/>
         </Link>
-        <Link to="/deals" className="bg-white p-4 rounded-2xl flex items-center justify-between shadow-sm border border-gray-50 hover:border-accent/20 transition-all active:scale-95">
-          <div className="flex items-center text-gray-700 font-bold"><Briefcase className="w-5 h-5 mr-3 text-green-500/80" /> Mening Kelishuvlarim</div>
-          <ChevronRight className="w-5 h-5 text-gray-300"/>
+        <Link to="/deals" className="bg-brand-card p-4 rounded-2xl flex items-center justify-between shadow-[0_4px_20px_rgba(0,0,0,0.1)] border border-brand-border hover:border-brand-primary/50 transition-all active:scale-[0.98] group">
+          <div className="flex items-center text-brand-text font-bold"><Briefcase className="w-5 h-5 mr-3 text-green-500/80" /> Mening Kelishuvlarim</div>
+          <ChevronRight className="w-5 h-5 text-brand-muted/50 group-hover:text-brand-primary transition-colors"/>
         </Link>
-        <Link to="/seller/inventory" className="bg-white p-4 rounded-2xl flex items-center justify-between shadow-sm border border-gray-50 hover:border-accent/20 transition-all active:scale-95">
-          <div className="flex items-center text-gray-700 font-bold"><Package className="w-5 h-5 mr-3 text-amber-500/80" /> E'lonlarim (Assets)</div>
-          <ChevronRight className="w-5 h-5 text-gray-300"/>
+        <Link to="/seller/inventory" className="bg-brand-card p-4 rounded-2xl flex items-center justify-between shadow-[0_4px_20px_rgba(0,0,0,0.1)] border border-brand-border hover:border-brand-primary/50 transition-all active:scale-[0.98] group">
+          <div className="flex items-center text-brand-text font-bold"><Package className="w-5 h-5 mr-3 text-amber-500/80" /> E'lonlarim (Assets)</div>
+          <ChevronRight className="w-5 h-5 text-brand-muted/50 group-hover:text-brand-primary transition-colors"/>
         </Link>
       </div>
     </div>
@@ -77,25 +77,25 @@ function BottomNavigation() {
   const isActive = (path) => location.pathname === path;
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-100 flex justify-around p-2 pb-safe shadow-[0_-4px_24px_rgba(0,0,0,0.02)] z-50">
-      <Link to="/" className={`flex flex-1 flex-col items-center py-2 transition-colors ${isActive('/') ? 'text-accent' : 'text-gray-400 hover:text-gray-600'}`}>
-        <Home className={`w-6 h-6 mb-1 ${isActive('/') ? 'fill-accent/20 stroke-2' : 'stroke-[1.5]'}`} />
+    <div className="fixed bottom-0 left-0 right-0 bg-brand-card/95 backdrop-blur-md border-t border-brand-border flex justify-around p-2 pb-safe shadow-[0_-10px_40px_rgba(0,0,0,0.5)] z-50">
+      <Link to="/" className={`flex flex-1 flex-col items-center py-2 transition-colors ${isActive('/') ? 'text-brand-primary' : 'text-brand-muted hover:text-brand-text'}`}>
+        <Home className={`w-6 h-6 mb-1 ${isActive('/') ? 'fill-brand-primary/20 stroke-2' : 'stroke-[1.5]'}`} />
         <span className="text-[10px] font-bold">Asosiy</span>
       </Link>
 
-      <Link to="/discovery" className={`flex flex-1 flex-col items-center py-2 transition-colors ${isActive('/discovery') ? 'text-accent' : 'text-gray-400 hover:text-gray-600'}`}>
-        <Search className={`w-6 h-6 mb-1 ${isActive('/discovery') ? 'fill-accent/20 stroke-2' : 'stroke-[1.5]'}`} />
+      <Link to="/discovery" className={`flex flex-1 flex-col items-center py-2 transition-colors ${isActive('/discovery') ? 'text-brand-primary' : 'text-brand-muted hover:text-brand-text'}`}>
+        <Search className={`w-6 h-6 mb-1 ${isActive('/discovery') ? 'fill-brand-primary/20 stroke-2' : 'stroke-[1.5]'}`} />
         <span className="text-[10px] font-bold">Qidiruv</span>
       </Link>
       
       <Link to="/seller/inventory/create" className="flex flex-col items-center justify-center -mt-6">
-        <div className="w-14 h-14 bg-accent text-white rounded-full flex items-center justify-center shadow-lg shadow-accent/30 border-4 border-gray-50 active:scale-90 transition-transform">
+        <div className="w-14 h-14 bg-brand-primary text-black rounded-full flex items-center justify-center shadow-lg shadow-brand-primary/30 border-4 border-brand-bg active:scale-90 transition-transform hover:bg-brand-primary/90">
           <Plus className="w-6 h-6 stroke-[3]" />
         </div>
       </Link>
 
-      <Link to="/profile" className={`flex flex-1 flex-col items-center py-2 transition-colors ${isActive('/profile') ? 'text-accent' : 'text-gray-400 hover:text-gray-600'}`}>
-        <User className={`w-6 h-6 mb-1 ${isActive('/profile') ? 'fill-accent/20 stroke-2' : 'stroke-[1.5]'}`} />
+      <Link to="/profile" className={`flex flex-1 flex-col items-center py-2 transition-colors ${isActive('/profile') ? 'text-brand-primary' : 'text-brand-muted hover:text-brand-text'}`}>
+        <User className={`w-6 h-6 mb-1 ${isActive('/profile') ? 'fill-brand-primary/20 stroke-2' : 'stroke-[1.5]'}`} />
         <span className="text-[10px] font-bold">Profil</span>
       </Link>
     </div>
@@ -110,7 +110,7 @@ const AnimatedPage = ({ children }) => {
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0, x: -20 }}
       transition={{ duration: 0.25, ease: 'easeOut' }}
-      className="w-full h-full min-h-screen bg-[#fcfcfd]"
+      className="w-full h-full min-h-screen bg-brand-bg"
     >
       {children}
     </motion.div>
@@ -139,7 +139,7 @@ function AppContent({ startParam }) {
   }, [startParam, navigate]);
 
   return (
-    <div className="min-h-screen bg-gray-50 text-gray-900 font-sans overflow-x-hidden relative">
+    <div className="min-h-screen bg-brand-bg text-brand-text font-sans overflow-x-hidden relative selection:bg-brand-primary/30 selection:text-brand-primary">
       <AnimatePresence mode="wait">
         <Routes location={location} key={location.pathname}>
           <Route path="/" element={<AnimatedPage><MobileDashboard /></AnimatedPage>} />
@@ -250,10 +250,10 @@ function App() {
 
   if (!isAuthReady) {
     return (
-      <div className="min-h-screen bg-[#fcfcfd] flex items-center justify-center">
+      <div className="min-h-screen bg-brand-bg flex items-center justify-center">
         <div className="flex flex-col items-center">
-          <div className="w-12 h-12 border-4 border-accent border-t-transparent rounded-full animate-spin mb-4"></div>
-          <span className="font-bold text-gray-500 text-sm">Tizimga kirilmoqda...</span>
+          <div className="w-12 h-12 border-4 border-brand-primary border-t-transparent rounded-full animate-spin mb-4"></div>
+          <span className="font-bold text-brand-muted text-sm tracking-wide">Tizimga kirilmoqda...</span>
         </div>
       </div>
     );

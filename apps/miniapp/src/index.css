@@ -1,16 +1,27 @@
 @import "tailwindcss";
 
+@theme {
+  --color-brand-bg: #080C12;
+  --color-brand-card: #0F1923;
+  --color-brand-border: #1A2535;
+  --color-brand-primary: #00C27C;
+  --color-brand-accent: #FFB800;
+  --color-brand-text: #F0F4F8;
+  --color-brand-muted: #4A5568;
+}
+
 html, body, #root {
   height: 100%;
   width: 100%;
   margin: 0;
   padding: 0;
   font-family: system-ui, -apple-system, sans-serif;
-  background-color: #f9fafb;
+  background-color: var(--color-brand-bg);
+  color: var(--color-brand-text);
 }
 
-/* Base styles for Telegram Mini App */
+/* Force Dark Premium Theme overriding Telegram defaults */
 body {
-  color: var(--tg-theme-text-color, #000000);
-  background-color: var(--tg-theme-bg-color, #ffffff);
+  background-color: var(--color-brand-bg) !important;
+  color: var(--color-brand-text) !important;
 }

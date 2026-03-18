@@ -39,23 +39,23 @@ const MobileFilterModal = ({ isOpen, onClose, filters, setFilters, onApply }) =>
         className="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm animate-in fade-in" 
         onClick={onClose} 
       />
-      <div className="fixed inset-x-0 bottom-0 z-50 bg-white rounded-t-[32px] w-full max-h-[90vh] flex flex-col animate-in slide-in-from-bottom duration-300 shadow-2xl">
-        <div className="p-4 flex items-center justify-between sticky top-0 bg-white/95 backdrop-blur-md rounded-t-[32px] z-10 border-b border-gray-100 flex-shrink-0">
-          <h2 className="text-lg font-black text-gray-900 tracking-tight ml-2">Filtrlash</h2>
+      <div className="fixed inset-x-0 bottom-0 z-50 bg-brand-card border-t border-brand-border rounded-t-[32px] w-full max-h-[90vh] flex flex-col animate-in slide-in-from-bottom duration-300 shadow-[0_-10px_40px_rgba(0,0,0,0.5)]">
+        <div className="p-4 flex items-center justify-between sticky top-0 bg-brand-card/95 backdrop-blur-md rounded-t-[32px] z-10 border-b border-brand-border flex-shrink-0">
+          <h2 className="text-lg font-black text-brand-text tracking-tight ml-2">Filtrlash</h2>
           <div className="flex items-center space-x-2">
              <button 
                 onClick={() => setFilters({ ...filters, city: '', media_type: '', price_min: '', price_max: '' })}
-                className="text-[11px] font-bold text-gray-500 px-3 py-2 bg-gray-100 rounded-xl active:scale-95 transition-all"
+                className="text-[11px] font-bold text-brand-text px-3 py-2 bg-brand-bg border border-brand-border rounded-xl active:scale-95 transition-all"
              >
                 Tozalash
              </button>
              <button 
                 onClick={() => { onApply(); onClose(); }}
-                className="text-[11px] font-black text-white px-3 py-2 bg-accent shadow-md shadow-accent/20 rounded-xl active:scale-95 transition-all"
+                className="text-[11px] font-black text-black px-3 py-2 bg-brand-primary shadow-lg shadow-brand-primary/20 rounded-xl active:scale-95 transition-all"
              >
                 Saqlash
              </button>
-             <button onClick={onClose} className="p-1.5 text-gray-400 bg-gray-50 rounded-full hover:bg-gray-100 transition-colors ml-1">
+             <button onClick={onClose} className="p-1.5 text-brand-muted bg-brand-bg border border-brand-border rounded-full hover:bg-brand-border transition-colors ml-1">
                <X className="w-5 h-5" />
              </button>
           </div>
@@ -64,19 +64,19 @@ const MobileFilterModal = ({ isOpen, onClose, filters, setFilters, onApply }) =>
         <div className="p-5 pb-20 overflow-y-auto flex-1 space-y-6">
           {/* Viloyat */}
           <div>
-            <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2.5">Viloyat (Hudud)</label>
+            <label className="block text-[10px] font-black text-brand-muted uppercase tracking-widest mb-2.5">Viloyat (Hudud)</label>
             <select 
               value={filters.city} 
               onChange={(e) => setFilters({...filters, city: e.target.value})}
-              className="w-full px-4 py-3.5 border border-gray-200 bg-gray-50 rounded-2xl font-bold text-sm outline-none focus:ring-2 focus:ring-accent/20 transition-all focus:bg-white"
+              className="w-full px-4 py-3.5 border border-brand-border bg-brand-bg rounded-2xl font-bold text-sm text-brand-text outline-none focus:ring-2 focus:ring-brand-primary/50 transition-all focus:bg-brand-card"
             >
-              {REGIONS.map(r => <option key={r.id} value={r.id}>{r.label}</option>)}
+              {REGIONS.map(r => <option key={r.id} value={r.id} className="bg-brand-card text-brand-text">{r.label}</option>)}
             </select>
           </div>
 
           {/* Platforma */}
           <div>
-            <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2.5">Platforma</label>
+            <label className="block text-[10px] font-black text-brand-muted uppercase tracking-widest mb-2.5">Platforma</label>
             <div className="flex flex-wrap gap-2">
               {MEDIA_TYPES.map(t => (
                 <button 
@@ -84,8 +84,8 @@ const MobileFilterModal = ({ isOpen, onClose, filters, setFilters, onApply }) =>
                   onClick={() => setFilters({...filters, media_type: t.id})}
                   className={`px-4 py-2.5 rounded-2xl text-xs font-bold transition-all border ${
                     filters.media_type === t.id 
-                    ? 'bg-accent border-accent text-white shadow-md shadow-accent/20' 
-                    : 'bg-white border-gray-200 text-gray-600 hover:bg-gray-50'
+                    ? 'bg-brand-primary border-brand-primary text-black shadow-lg shadow-brand-primary/20' 
+                    : 'bg-brand-card border-brand-border text-brand-text hover:bg-brand-bg hover:border-brand-muted/40'
                   }`}
                 >
                   {t.label}
@@ -96,22 +96,22 @@ const MobileFilterModal = ({ isOpen, onClose, filters, setFilters, onApply }) =>
 
           {/* Narx */}
           <div>
-            <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2.5">Narx oralig'i (USD)</label>
+            <label className="block text-[10px] font-black text-brand-muted uppercase tracking-widest mb-2.5">Narx oralig'i (USD)</label>
             <div className="flex items-center gap-3">
               <input 
                 type="number" 
                 placeholder="Min"
                 value={filters.price_min}
                 onChange={(e) => setFilters({...filters, price_min: e.target.value})}
-                className="w-full px-4 py-3.5 bg-gray-50 border border-gray-200 rounded-2xl font-bold focus:bg-white focus:ring-2 focus:ring-accent/20 text-sm outline-none transition-all"
+                className="w-full px-4 py-3.5 bg-brand-bg border border-brand-border rounded-2xl font-bold text-brand-text focus:bg-brand-card focus:ring-2 focus:ring-brand-primary/50 text-sm outline-none transition-all"
               />
-              <span className="text-gray-300 font-bold">-</span>
+              <span className="text-brand-muted font-bold">-</span>
               <input 
                 type="number" 
                 placeholder="Max"
                 value={filters.price_max}
                 onChange={(e) => setFilters({...filters, price_max: e.target.value})}
-                className="w-full px-4 py-3.5 bg-gray-50 border border-gray-200 rounded-2xl font-bold focus:bg-white focus:ring-2 focus:ring-accent/20 text-sm outline-none transition-all"
+                className="w-full px-4 py-3.5 bg-brand-bg border border-brand-border rounded-2xl font-bold text-brand-text focus:bg-brand-card focus:ring-2 focus:ring-brand-primary/50 text-sm outline-none transition-all"
               />
             </div>
           </div>

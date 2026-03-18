@@ -86,6 +86,17 @@ async def get_discovery_assets(
         if city:
             count_stmt = count_stmt.join(MediaAssetRegion).filter(MediaAssetRegion.city.ilike(f"%{city}%"))
 
+        if price_min is not None or price_max is not None:
+            if not any(isinstance(c.entity, type) and c.entity == MediaAssetPricing for c in count_stmt.get_final_join_entities()):
+                count_stmt = count_stmt.join(MediaAssetPricing)
+            if price_min is not None:
+                count_stmt = count_stmt.filter(MediaAssetPricing.base_price >= price_min)
+            if price_max is not None:
+                count_stmt = count_stmt.filter(MediaAssetPricing.base_price <= price_max)
+
+        if engagement_rate_min:
+            count_stmt = count_stmt.join(MediaAssetAudience).filter(MediaAssetAudience.avg_engagement_rate >= engagement_rate_min)
+
         total_count = (await db.execute(count_stmt)).scalar()
 
         # Apply pagination and sorting

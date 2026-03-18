@@ -58,67 +58,67 @@ const MobileSendOfferModal = ({ asset, isOpen, onClose }) => {
         className="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm animate-in fade-in" 
         onClick={onClose} 
       />
-      <div className="fixed inset-x-0 bottom-0 z-50 bg-white rounded-t-[32px] w-full max-h-[90vh] overflow-y-auto animate-in slide-in-from-bottom duration-300 shadow-2xl">
-        <div className="p-5 flex items-center justify-between sticky top-0 bg-white/95 backdrop-blur-md rounded-t-[32px] z-10 border-b border-gray-100">
-          <h2 className="text-xl font-black text-gray-900 tracking-tight">Send Offer</h2>
-          <button onClick={onClose} className="p-2 text-gray-400 bg-gray-50 rounded-full hover:bg-gray-100 hover:text-gray-900 transition-colors">
+      <div className="fixed inset-x-0 bottom-0 z-50 bg-brand-card border-t border-brand-border rounded-t-[32px] w-full max-h-[90vh] overflow-y-auto animate-in slide-in-from-bottom duration-300 shadow-[0_-10px_40px_rgba(0,0,0,0.5)]">
+        <div className="p-5 flex items-center justify-between sticky top-0 bg-brand-card/95 backdrop-blur-md rounded-t-[32px] z-10 border-b border-brand-border">
+          <h2 className="text-xl font-black text-brand-text tracking-tight">Taklif Yuborish</h2>
+          <button onClick={onClose} className="p-2 text-brand-muted bg-brand-bg border border-brand-border rounded-full hover:bg-brand-border hover:text-brand-text transition-colors">
             <X className="w-5 h-5" />
           </button>
         </div>
         
         {success ? (
-          <div className="p-8 pb-12 text-center text-green-600">
-            <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-              <Send className="w-8 h-8" />
+          <div className="p-8 pb-12 text-center text-brand-primary">
+            <div className="w-16 h-16 bg-brand-primary/20 border border-brand-primary/30 rounded-full flex items-center justify-center mx-auto mb-4">
+              <Send className="w-8 h-8 text-brand-primary" />
             </div>
-            <h3 className="text-xl font-black mb-2 tracking-tight">Offer Sent!</h3>
-            <p className="text-sm font-medium text-gray-500">The seller will review it soon.</p>
+            <h3 className="text-xl font-black mb-2 tracking-tight">Taklif Yuborildi!</h3>
+            <p className="text-sm font-medium text-brand-muted">Sotuvchi uni tez orada ko'rib chiqadi.</p>
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="p-5 pb-8 space-y-5">
             {error && <div className="p-3 bg-red-50 text-red-600 rounded-2xl font-bold text-xs border border-red-100">{error}</div>}
             
             <div>
-              <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1.5">Offer Price (USD)</label>
+              <label className="block text-[10px] font-black text-brand-muted uppercase tracking-widest mb-1.5">Taklif Narxi (USD)</label>
               <input 
                 type="number" 
                 required
                 value={price}
                 onChange={e => setPrice(e.target.value)}
-                className="w-full px-4 py-3 bg-gray-50 border border-gray-100 rounded-2xl font-bold focus:ring-2 focus:ring-accent/20 focus:border-accent text-lg outline-none transition-all"
+                className="w-full px-4 py-3 bg-brand-bg border border-brand-border text-brand-text rounded-2xl font-bold focus:ring-2 focus:ring-brand-primary/50 focus:border-brand-primary text-lg outline-none transition-all placeholder-brand-muted/30"
                 placeholder="0.00"
               />
             </div>
 
             <div>
-              <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1.5">Campaign Timeline</label>
+              <label className="block text-[10px] font-black text-brand-muted uppercase tracking-widest mb-1.5">Muddat (Timeline)</label>
               <input 
                 type="text" 
                 value={timeline}
                 onChange={e => setTimeline(e.target.value)}
-                className="w-full px-4 py-3 bg-gray-50 border border-gray-100 rounded-2xl font-medium focus:ring-2 focus:ring-accent/20 focus:border-accent text-sm outline-none transition-all"
-                placeholder="e.g. Next 2 weeks..."
+                className="w-full px-4 py-3 bg-brand-bg border border-brand-border text-brand-text rounded-2xl font-medium focus:ring-2 focus:ring-brand-primary/50 focus:border-brand-primary text-sm outline-none transition-all placeholder-brand-muted/30"
+                placeholder="Masalan: Keyingi 2 hafta..."
               />
             </div>
 
             <div>
-              <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1.5">Message / Details</label>
+              <label className="block text-[10px] font-black text-brand-muted uppercase tracking-widest mb-1.5">Xabar / Tafsilotlar</label>
               <textarea 
                 required
                 rows="4"
                 value={message}
                 onChange={e => setMessage(e.target.value)}
-                className="w-full px-4 py-3 bg-gray-50 border border-gray-100 rounded-2xl font-medium focus:ring-2 focus:ring-accent/20 focus:border-accent text-sm outline-none transition-all resize-none"
-                placeholder="Describe your goals..."
+                className="w-full px-4 py-3 bg-brand-bg border border-brand-border text-brand-text rounded-2xl font-medium focus:ring-2 focus:ring-brand-primary/50 focus:border-brand-primary text-sm outline-none transition-all resize-none placeholder-brand-muted/30"
+                placeholder="O'z maqsadingizni yozing..."
               />
             </div>
 
             <button 
               disabled={loading}
               type="submit" 
-              className="w-full py-4 mt-2 bg-accent text-white rounded-[20px] font-black hover:bg-accent/90 focus:bg-accent/90 active:scale-[0.98] transition-all flex items-center justify-center shadow-xl shadow-accent/20 disabled:opacity-50"
+              className="w-full py-4 mt-2 bg-brand-primary text-black rounded-[20px] font-black hover:bg-brand-primary/90 focus:bg-brand-primary/90 active:scale-[0.98] transition-all flex items-center justify-center shadow-lg shadow-brand-primary/20 disabled:opacity-50"
             >
-              {loading ? 'Sending...' : 'Submit Offer'}
+              {loading ? 'Yuborilmoqda...' : 'Taklifni Yuborish'}
               {!loading && <Send className="w-4 h-4 ml-2" />}
             </button>
           </form>

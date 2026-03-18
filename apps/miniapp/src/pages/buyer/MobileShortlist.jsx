@@ -41,28 +41,28 @@ const MobileShortlist = () => {
   };
 
   return (
-    <div className="p-4 pb-32">
+    <div className="p-4 pb-32 bg-brand-bg min-h-screen">
       <div className="mb-6">
-        <h1 className="text-2xl font-black text-gray-900 uppercase">My Shortlist</h1>
-        <p className="text-xs text-gray-400 font-bold uppercase tracking-widest mt-1">Saved for later</p>
+        <h1 className="text-2xl font-black text-brand-text uppercase tracking-tight">Saqlanganlar</h1>
+        <p className="text-[10px] text-brand-muted font-bold uppercase tracking-widest mt-1">Keyinroq ko'rish uchun</p>
       </div>
 
       {loading ? (
         <div className="space-y-4">
           {[1,2].map(i => (
-            <div key={i} className="h-64 bg-white rounded-3xl border border-gray-100 animate-pulse"></div>
+            <div key={i} className="h-64 bg-brand-card opacity-50 rounded-3xl border border-brand-border animate-pulse"></div>
           ))}
         </div>
       ) : items.length === 0 ? (
-        <div className="py-20 text-center bg-white rounded-3xl border border-gray-100 shadow-sm px-6">
-          <Heart className="w-12 h-12 text-gray-100 mx-auto mb-4" />
-          <h3 className="text-lg font-black text-gray-900">List is empty</h3>
-          <p className="text-xs text-gray-400 mb-6">Explore the marketplace and save assets you like.</p>
+        <div className="py-20 text-center bg-brand-card rounded-3xl border border-brand-border shadow-[0_4px_20px_rgba(0,0,0,0.2)] px-6">
+          <Heart className="w-12 h-12 text-brand-muted opacity-20 mx-auto mb-4" />
+          <h3 className="text-lg font-black text-brand-text">Ro'yxat bo'sh</h3>
+          <p className="text-xs text-brand-muted mb-6">Bozorni ko'zdan kechiring va yoqqan aktivlarni saqlang.</p>
           <Link 
             to="/discovery" 
-            className="inline-flex items-center px-6 py-3 bg-accent text-white text-sm font-black rounded-2xl shadow-lg shadow-accent/20"
+            className="inline-flex items-center px-6 py-3 bg-brand-primary text-black text-sm font-black rounded-2xl shadow-lg shadow-brand-primary/20 active:scale-95 transition-all"
           >
-            Go to Marketplace <ArrowRight className="w-4 h-4 ml-2" />
+            Bozorga o'tish <ArrowRight className="w-4 h-4 ml-2" />
           </Link>
         </div>
       ) : (

@@ -112,13 +112,13 @@ const MobileDiscovery = () => {
         onApply={() => { setPage(1); fetchAssets(); }}
       />
       
-      <div className="mb-4 sticky top-0 z-10 bg-gray-50/90 backdrop-blur-md py-2">
+      <div className="mb-4 sticky top-0 z-10 bg-brand-bg/90 backdrop-blur-md py-2">
         <div className="relative">
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-brand-muted" />
           <input 
             type="text" 
-            placeholder="Search channels, bots, groups..."
-            className="w-full bg-white border border-gray-100 rounded-2xl py-4 pl-12 pr-12 text-sm font-bold shadow-sm focus:ring-2 focus:ring-accent outline-none"
+            placeholder="Izlash (kanal, bot, guruh...)"
+            className="w-full bg-brand-card text-brand-text border border-brand-border rounded-2xl py-4 pl-12 pr-12 text-sm font-bold shadow-[0_4px_24px_rgba(0,0,0,0.2)] focus:ring-2 focus:ring-brand-primary outline-none focus:border-transparent transition-all"
             value={filters.query}
             onChange={(e) => {
               setFilters({...filters, query: e.target.value});
@@ -126,7 +126,7 @@ const MobileDiscovery = () => {
             }}
           />
           {filters.query && (
-            <button onClick={() => { setFilters({...filters, query: ''}); setPage(1); }} className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 p-1 bg-gray-100 rounded-full">
+            <button onClick={() => { setFilters({...filters, query: ''}); setPage(1); }} className="absolute right-4 top-1/2 -translate-y-1/2 text-brand-text p-1 bg-brand-border rounded-full hover:bg-brand-muted/30">
               <X className="w-3 h-3" />
             </button>
           )}
@@ -134,14 +134,14 @@ const MobileDiscovery = () => {
       </div>
 
       <div className="flex items-center justify-between mb-6 mt-2">
-        <h2 className="text-xl font-black text-gray-900 uppercase tracking-tight">Marketplace</h2>
+        <h2 className="text-xl font-black text-brand-text uppercase tracking-tight">Marketplace</h2>
         <button 
           onClick={() => setIsFilterModalOpen(true)}
-          className="relative p-2.5 bg-white rounded-xl border border-gray-100 shadow-sm text-gray-600 active:scale-95 transition-transform"
+          className="relative p-2.5 bg-brand-card rounded-xl border border-brand-border shadow-[0_4px_20px_rgba(0,0,0,0.2)] text-brand-text hover:border-brand-primary active:scale-95 transition-all group"
         >
-          <SlidersHorizontal className="w-5 h-5" />
+          <SlidersHorizontal className="w-5 h-5 group-hover:text-brand-primary transition-colors" />
           {getActiveFiltersCount() > 0 && (
-            <span className="absolute -top-1.5 -right-1.5 w-5 h-5 bg-accent text-white rounded-full flex items-center justify-center text-[10px] font-black shadow-sm border-2 border-white">
+            <span className="absolute -top-1.5 -right-1.5 w-5 h-5 bg-brand-primary text-black rounded-full flex items-center justify-center text-[10px] font-black shadow-lg border-2 border-brand-card">
               {getActiveFiltersCount()}
             </span>
           )}
@@ -151,16 +151,16 @@ const MobileDiscovery = () => {
       {loading ? (
         <div className="space-y-4">
           {[1,2,3,4].map(i => (
-            <div key={i} className="h-64 bg-white rounded-3xl border border-gray-100 animate-pulse"></div>
+            <div key={i} className="h-64 bg-brand-card/50 rounded-3xl border border-brand-border animate-pulse"></div>
           ))}
         </div>
       ) : assets.length === 0 ? (
         <div className="py-20 text-center">
-          <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-4 border border-gray-100">
-            <Layout className="w-8 h-8 text-gray-200" />
+          <div className="w-16 h-16 bg-brand-card rounded-full flex items-center justify-center mx-auto mb-4 border border-brand-border shadow-inner">
+            <Layout className="w-8 h-8 text-brand-muted" />
           </div>
-          <h3 className="text-lg font-black text-gray-900">No results found</h3>
-          <p className="text-xs text-gray-400 mt-1">Try adjusting your filters</p>
+          <h3 className="text-lg font-black text-brand-text">Aktivlar topilmadi</h3>
+          <p className="text-xs text-brand-muted mt-1">Filterlarni o'zgartirib ko'ring</p>
           {getActiveFiltersCount() > 0 && (
             <button 
               onClick={() => {
@@ -168,9 +168,9 @@ const MobileDiscovery = () => {
                 setPage(1);
                 setTimeout(() => fetchAssets(), 100);
               }}
-              className="mt-4 text-xs font-bold text-accent py-2 px-4 bg-accent/10 rounded-xl"
+              className="mt-4 text-xs font-bold text-brand-primary py-2 px-4 bg-brand-primary/10 border border-brand-primary/20 rounded-xl hover:bg-brand-primary/20 transition-all font-bold"
             >
-              Clear filters
+              Filterlarni tozalash
             </button>
           )}
         </div>
