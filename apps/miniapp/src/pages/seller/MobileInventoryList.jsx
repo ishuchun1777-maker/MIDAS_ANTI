@@ -8,26 +8,27 @@ const MobileInventoryList = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Mock data for Mini App
     const fetchAssets = async () => {
-      const mockData = [
-        {
-          id: '1',
-          title: 'Biznes Auditoriya Telegram',
-          media_type: 'telegram_channel',
-          status: 'verified',
-          reach: '45k'
-        },
-        {
-          id: '2',
-          title: 'Lifestyle Instagram',
-          media_type: 'instagram',
-          status: 'draft',
-          reach: '12k'
+      try {
+        const token = localStorage.getItem('token');
+        const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000/api/v1';
+        const res = await fetch(`${API_BASE_URL}/inventory/assets/mine`, {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+        if (res.ok) {
+          const data = await res.json();
+          // Map to match UI expected fields if necessary, or pass raw
+          setAssets(data);
+        } else {
+          console.error("Failed to fetch assets");
         }
-      ];
-      setAssets(mockData);
-      setLoading(false);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
     };
     fetchAssets();
   }, []);

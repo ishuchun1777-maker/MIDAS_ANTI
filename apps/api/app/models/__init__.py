@@ -7,6 +7,9 @@ from app.models.inventory import (
     MediaAssetAudience, MediaAssetSocialDetails, MediaAssetOutdoorDetails,
     MediaAssetFile, MediaAssetAvailability
 )
+from app.models.offer import Offer
+from app.models.deal import Deal
+from app.models.chat import Message
 
 __all__ = [
     "Base",
@@ -25,5 +28,8 @@ __all__ = [
     "MediaAssetSocialDetails",
     "MediaAssetOutdoorDetails",
     "MediaAssetFile",
-    "MediaAssetAvailability"
+    "MediaAssetAvailability",
+    "Offer",
+    "Deal",
+    "Message"
 ]

@@ -16,7 +16,9 @@ const MobileShortlist = () => {
   const fetchShortlist = async () => {
     setLoading(true);
     try {
-      const res = await fetch(`${API_BASE}/shortlist/`);
+      const res = await fetch(`${API_BASE}/shortlist/`, {
+        headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+      });
       const data = await res.json();
       setItems(data || []);
     } catch (e) {
@@ -28,7 +30,10 @@ const MobileShortlist = () => {
 
   const removeItem = async (assetId) => {
     try {
-      await fetch(`${API_BASE}/shortlist/${assetId}`, { method: 'DELETE' });
+      await fetch(`${API_BASE}/shortlist/${assetId}`, { 
+        method: 'DELETE',
+        headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+      });
       setItems(prev => prev.filter(item => item.media_asset_id !== assetId));
     } catch (e) {
       alert('Action failed');

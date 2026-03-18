@@ -234,9 +234,13 @@ const MobileAssetForm = () => {
         visibility: "public"
       };
 
+      const token = localStorage.getItem('token');
       const response = await fetch(`${API_BASE_URL}/inventory/assets`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
         body: JSON.stringify(payload)
       });
 

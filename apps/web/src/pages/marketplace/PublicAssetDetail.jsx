@@ -11,12 +11,14 @@ import {
   ChevronRight,
   Info
 } from 'lucide-react';
+import SendOfferModal from '../../components/SendOfferModal';
 
 const PublicAssetDetail = () => {
   const { id } = useParams();
   const [asset, setAsset] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [isOfferModalOpen, setIsOfferModalOpen] = useState(false);
 
   const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:8000/api/v1';
 
@@ -50,6 +52,8 @@ const PublicAssetDetail = () => {
 
   return (
     <div className="bg-[#fcfcfd] min-h-screen pb-20">
+      <SendOfferModal asset={asset} isOpen={isOfferModalOpen} onClose={() => setIsOfferModalOpen(false)} />
+      
       {/* Navigation */}
       <div className="bg-white/80 backdrop-blur-md border-b border-gray-100 sticky top-0 z-30">
         <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
@@ -58,7 +62,7 @@ const PublicAssetDetail = () => {
           </Link>
           <div className="flex items-center space-x-4">
             <button className="px-6 py-3 text-sm font-black text-gray-900 hover:bg-gray-50 rounded-2xl transition-all border border-gray-100">Share</button>
-            <button className="px-8 py-3 text-sm font-black bg-accent text-white rounded-2xl hover:bg-accent/90 shadow-lg shadow-accent/20 active:scale-95 transition-all">Book Now</button>
+            <button onClick={() => setIsOfferModalOpen(true)} className="px-8 py-3 text-sm font-black bg-accent text-white rounded-2xl hover:bg-accent/90 shadow-lg shadow-accent/20 active:scale-95 transition-all">Book Now</button>
           </div>
         </div>
       </div>
@@ -123,7 +127,7 @@ const PublicAssetDetail = () => {
                     <div className="text-right">
                       <span className="block text-2xl font-black text-gray-900">${format.price || basePrice}</span>
                     </div>
-                    <button className="w-12 h-12 bg-white border border-gray-200 rounded-2xl flex items-center justify-center hover:bg-accent hover:text-white hover:border-accent transition-all active:scale-90 shadow-sm">
+                    <button onClick={() => setIsOfferModalOpen(true)} className="w-12 h-12 bg-white border border-gray-200 rounded-2xl flex items-center justify-center hover:bg-accent hover:text-white hover:border-accent transition-all active:scale-90 shadow-sm">
                       <ChevronRight className="w-5 h-5" />
                     </button>
                   </div>
@@ -159,7 +163,10 @@ const PublicAssetDetail = () => {
               ))}
             </div>
 
-            <button className="w-full py-5 bg-accent text-white rounded-[24px] font-black text-lg hover:bg-accent/90 shadow-xl shadow-accent/20 active:scale-[0.98] transition-all mb-4">
+            <button 
+              onClick={() => setIsOfferModalOpen(true)}
+              className="w-full py-5 bg-accent text-white rounded-[24px] font-black text-lg hover:bg-accent/90 shadow-xl shadow-accent/20 active:scale-[0.98] transition-all mb-4"
+            >
               Send Inquiry
             </button>
             <p className="text-center text-[10px] text-gray-400 font-black uppercase tracking-widest">Response time: ~2 hours</p>

@@ -199,11 +199,20 @@ const DiscoveryPage = () => {
                   value={filters.city}
                   onChange={(e) => setFilters({...filters, city: e.target.value, page: 1})}
                 >
-                  <option value="">All Regions</option>
-                  <option value="Tashkent">Tashkent</option>
-                  <option value="Samarkand">Samarkand</option>
+                  <option value="">Barcha Viloyatlar</option>
+                  <option value="Toshkent">Toshkent (Shahar/Viloyat)</option>
+                  <option value="Andijon">Andijon</option>
+                  <option value="Buxoro">Buxoro</option>
+                  <option value="Farg'ona">Farg'ona</option>
+                  <option value="Jizzax">Jizzax</option>
+                  <option value="Xorazm">Xorazm</option>
                   <option value="Namangan">Namangan</option>
-                  <option value="Andijan">Andijan</option>
+                  <option value="Navoiy">Navoiy</option>
+                  <option value="Qashqadaryo">Qashqadaryo</option>
+                  <option value="Samarqand">Samarqand</option>
+                  <option value="Sirdaryo">Sirdaryo</option>
+                  <option value="Surxondaryo">Surxondaryo</option>
+                  <option value="Qoraqalpog'iston Respublikasi">Qoraqalpog'iston Resp.</option>
                 </select>
               </div>
             </div>

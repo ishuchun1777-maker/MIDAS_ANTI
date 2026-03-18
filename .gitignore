@@ -38,3 +38,14 @@ yarn-error.log*
 # System Files
 Thumbs.db
 desktop.ini
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+alembic.ini
+vnev/
+venv/
+ENV/
+env/
