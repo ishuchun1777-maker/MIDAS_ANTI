@@ -47,12 +47,14 @@ async def command_start_handler(message: Message) -> None:
     
     await message.answer(welcome_text, reply_markup=keyboard)
 
+from aiogram.client.default import DefaultBotProperties
+
 async def main() -> None:
     if not TOKEN:
         logging.error("BOT_TOKEN is not set in the environment variables.")
         sys.exit(1)
         
-    bot = Bot(TOKEN, parse_mode=ParseMode.HTML)
+    bot = Bot(TOKEN, default=DefaultBotProperties(parse_mode=ParseMode.HTML))
     logging.info("Starting MIDAS Telegram Bot...")
     await dp.start_polling(bot)
 
