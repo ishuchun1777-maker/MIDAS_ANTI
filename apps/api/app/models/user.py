@@ -24,6 +24,7 @@ class User(Base):
     buyer_profile = relationship("BuyerProfile", back_populates="user", uselist=False)
     seller_profile = relationship("SellerProfile", back_populates="user", uselist=False)
     specialist_profile = relationship("SpecialistProfile", back_populates="user", uselist=False)
+    agency_profile = relationship("AgencyProfile", back_populates="user", uselist=False)
 
 class UserRole(Base):
     __tablename__ = "user_roles"

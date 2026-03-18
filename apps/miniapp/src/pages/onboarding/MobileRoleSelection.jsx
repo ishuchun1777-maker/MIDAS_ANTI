@@ -36,6 +36,15 @@ const MobileRoleSelection = ({ onRoleSelected }) => {
       color: 'text-purple-400',
       bg: 'bg-purple-500/10',
       border: 'border-purple-500/20'
+    },
+    {
+      id: 'agency',
+      title: 'Agentlik (Agency)',
+      description: 'Men bir nechta savdo nuqtalarini (Led, Billboard, avtobus) boshqaraman va sotaman',
+      icon: Briefcase,
+      color: 'text-emerald-400',
+      bg: 'bg-emerald-500/10',
+      border: 'border-emerald-500/20'
     }
   ];
 
@@ -66,6 +75,8 @@ const MobileRoleSelection = ({ onRoleSelected }) => {
         localStorage.setItem('buyer_profile_id', data.buyer_profile_id);
       } else if (selectedRole === 'specialist') {
         localStorage.setItem('specialist_profile_id', data.specialist_profile_id);
+      } else if (selectedRole === 'agency') {
+        localStorage.setItem('agency_profile_id', data.agency_profile_id);
       }
 
       // Trigger standard navigation or callback
@@ -73,7 +84,7 @@ const MobileRoleSelection = ({ onRoleSelected }) => {
         onRoleSelected(selectedRole);
       } else {
         // Find default route based on role
-        if (selectedRole === 'seller') navigate('/seller/inventory/create', { replace: true });
+        if (selectedRole === 'seller' || selectedRole === 'agency') navigate('/seller/inventory/create', { replace: true });
         else if (selectedRole === 'buyer') navigate('/discovery', { replace: true });
         else navigate('/', { replace: true });
       }

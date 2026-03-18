@@ -68,3 +68,22 @@ class SpecialistProfile(Base):
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
     user = relationship("User", back_populates="specialist_profile")
+
+class AgencyProfile(Base):
+    __tablename__ = "agency_profiles"
+
+    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    user_id = Column(UUID(as_uuid=True), ForeignKey("users.id"), nullable=False)
+    company_id = Column(UUID(as_uuid=True), ForeignKey("companies.id"), nullable=True)
+    agency_name = Column(String, nullable=True)
+    agency_type = Column(String, nullable=True) # e.g. 'Outdoor', 'Digital', 'Full-service'
+    description = Column(Text, nullable=True)
+    website = Column(String, nullable=True)
+    target_regions = Column(JSON, nullable=True)
+    trust_score = Column(Float, default=0.0)
+    verification_status = Column(String, default="pending")
+    public_status = Column(String, default="private")
+    created_at = Column(DateTime, default=datetime.utcnow)
+    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+
+    user = relationship("User", back_populates="agency_profile")
