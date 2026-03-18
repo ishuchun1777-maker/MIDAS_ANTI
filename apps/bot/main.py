@@ -14,9 +14,11 @@ from dotenv import load_dotenv
 load_dotenv()
 
 TOKEN = os.getenv("BOT_TOKEN", "")
-# Default fallback URL ensures the bot doesn't crash during early dev if url is missed.
-# Must be HTTPS per Telegram requirements.
-WEBAPP_URL = os.getenv("WEBAPP_URL", "") or "https://midas-platform-demo.vercel.app"
+raw_url = os.getenv("WEBAPP_URL", "").strip()
+if raw_url and not raw_url.startswith("http"):
+    raw_url = f"https://{raw_url}"
+    
+WEBAPP_URL = raw_url or "https://midas-platform-demo.vercel.app"
 
 dp = Dispatcher()
 
