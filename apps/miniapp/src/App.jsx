@@ -9,6 +9,32 @@ import MobileShortlist from './pages/buyer/MobileShortlist';
 import MobileDeals from './pages/profile/MobileDeals';
 import MobileChat from './pages/buyer/MobileChat';
 import MobileDashboard from './pages/dashboard/MobileDashboard';
+import MobileRoleSelection from './pages/onboarding/MobileRoleSelection';
+
+function Messages() { return <div className="p-6 pb-24"><h1 className="text-2xl font-bold mb-4">Messages</h1><div className="bg-white p-4 rounded-xl shadow-sm">Barcha yozishmalar tez orada... (Mening kelishuvlarimdan chatni oching)</div></div>; }
+
+const RoleGate = ({ children, requiredRole }) => {
+  const profileIdKey = requiredRole + '_profile_id';
+  const profileId = localStorage.getItem(profileIdKey);
+  if (!profileId && profileId !== "undefined") {
+    // Redirect logic
+    return (
+      <div className="bg-[#fcfcfd] min-h-screen pb-24 flex items-center justify-center p-6 text-center">
+        <div>
+          <div className="w-16 h-16 bg-red-50 rounded-full flex items-center justify-center mx-auto mb-4">
+             <Briefcase className="w-8 h-8 text-red-500" />
+          </div>
+          <h2 className="text-xl font-bold mb-2">Ruxsat etilmagan</h2>
+          <p className="text-gray-500 mb-6 font-medium text-sm">Siz ushbu bo'limga kirish uchun kerakli roldan ro'yxatdan o'tishingiz kerak.</p>
+          <Link to="/role-selection" className="bg-accent text-white px-6 py-3 rounded-2xl font-bold shadow-lg shadow-accent/20">
+            Ro'yxatdan o'tish
+          </Link>
+        </div>
+      </div>
+    );
+  }
+  return children;
+};
 
 function Messages() { return <div className="p-6 pb-24"><h1 className="text-2xl font-bold mb-4">Messages</h1><div className="bg-white p-4 rounded-xl shadow-sm">Barcha yozishmalar tez orada... (Mening kelishuvlarimdan chatni oching)</div></div>; }
 
@@ -118,13 +144,14 @@ function AppContent({ startParam }) {
       <AnimatePresence mode="wait">
         <Routes location={location} key={location.pathname}>
           <Route path="/" element={<AnimatedPage><MobileDashboard /></AnimatedPage>} />
+          <Route path="/role-selection" element={<AnimatedPage><MobileRoleSelection /></AnimatedPage>} />
           <Route path="/discovery" element={<AnimatedPage><MobileDiscovery /></AnimatedPage>} />
           <Route path="/shortlist" element={<AnimatedPage><MobileShortlist /></AnimatedPage>} />
           <Route path="/deals" element={<AnimatedPage><MobileDeals /></AnimatedPage>} />
           <Route path="/messages" element={<AnimatedPage><Messages /></AnimatedPage>} />
           <Route path="/messages/:id" element={<AnimatedPage><MobileChat /></AnimatedPage>} />
-          <Route path="/seller/inventory" element={<AnimatedPage><MobileInventoryList /></AnimatedPage>} />
-          <Route path="/seller/inventory/create" element={<AnimatedPage><MobileAssetForm /></AnimatedPage>} />
+          <Route path="/seller/inventory" element={<RoleGate requiredRole="seller"><AnimatedPage><MobileInventoryList /></AnimatedPage></RoleGate>} />
+          <Route path="/seller/inventory/create" element={<RoleGate requiredRole="seller"><AnimatedPage><MobileAssetForm /></AnimatedPage></RoleGate>} />
           <Route path="/profile" element={<AnimatedPage><Profile /></AnimatedPage>} />
         </Routes>
       </AnimatePresence>
@@ -193,6 +220,23 @@ function App() {
             const data = await res.json();
             localStorage.setItem('token', data.access_token);
             console.log("Dev Login Success!");
+          }
+        }
+
+        // Always check profile status if token exists
+        if (localStorage.getItem('token')) {
+          try {
+            const profileRes = await fetch(`${API_BASE}/profiles/me`, {
+              headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+            });
+            if (profileRes.ok) {
+              const pData = await profileRes.json();
+              if (pData.buyer_profile_id) localStorage.setItem('buyer_profile_id', pData.buyer_profile_id);
+              if (pData.seller_profile_id) localStorage.setItem('seller_profile_id', pData.seller_profile_id);
+              if (pData.specialist_profile_id) localStorage.setItem('specialist_profile_id', pData.specialist_profile_id);
+            }
+          } catch (e) {
+            console.error("Profile check error:", e);
           }
         }
       } catch (err) {

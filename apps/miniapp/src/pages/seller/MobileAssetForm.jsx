@@ -228,7 +228,7 @@ const MobileAssetForm = () => {
         description: formData.description,
         category: formData.category,
         social_link: formData.social_link,
-        seller_profile_id: "00000000-0000-0000-0000-000000000000", // Will be replaced by dynamic seller context
+        seller_profile_id: localStorage.getItem('seller_profile_id'),
         // Relationships are usually handled separately or via nested create if supported
         status: "draft",
         visibility: "public"
