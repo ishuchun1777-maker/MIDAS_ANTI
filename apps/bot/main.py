@@ -56,6 +56,7 @@ async def main() -> None:
         
     bot = Bot(TOKEN, default=DefaultBotProperties(parse_mode=ParseMode.HTML))
     logging.info("Starting MIDAS Telegram Bot...")
+    await bot.delete_webhook(drop_pending_updates=True)
     await dp.start_polling(bot)
 
 if __name__ == "__main__":

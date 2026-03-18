@@ -11,7 +11,7 @@ from app.models.deal import Deal
 from app.models.user import User
 from app.models.inventory import MediaAsset
 from app.schemas.offer import OfferCreate, OfferUpdate, OfferResponse
-from app.core.security import get_current_user
+from app.core.deps import get_current_user
 
 router = APIRouter()
 
