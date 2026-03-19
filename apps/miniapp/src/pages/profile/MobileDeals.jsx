@@ -13,7 +13,7 @@ const MobileDeals = () => {
     const fetchDeals = async () => {
       try {
         const token = localStorage.getItem('token');
-        const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000/api/v1';
+        const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://api-production-35ba.up.railway.app/api/v1';
         const res = await fetch(`${API_BASE_URL}/deals/`, {
           headers: { 'Authorization': `Bearer ${token}` }
         });

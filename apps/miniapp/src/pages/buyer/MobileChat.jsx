@@ -10,7 +10,7 @@ const MobileChat = () => {
   const [loading, setLoading] = useState(true);
   const endOfMessagesRef = useRef(null);
 
-  const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000/api/v1';
+  const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://api-production-35ba.up.railway.app/api/v1';
   const token = localStorage.getItem('token');
   const myId = token ? JSON.parse(atob(token.split('.')[1]))?.sub : null;
 
