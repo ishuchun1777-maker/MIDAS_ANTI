@@ -23,7 +23,8 @@ const MobileDiscovery = () => {
   const [page, setPage] = useState(1);
   const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
 
-  const API_BASE = import.meta.env.VITE_API_URL || 'https://api-production-35ba.up.railway.app/api/v1';
+  const rawUrl = import.meta.env.VITE_API_URL || 'https://api-production-35ba.up.railway.app';
+  const = = rawUrl.endsWith('/api/v1') ? rawUrl : `${rawUrl}/api/v1`;
 
   useEffect(() => {
     sessionStorage.setItem('discoveryFilters', JSON.stringify(filters));
