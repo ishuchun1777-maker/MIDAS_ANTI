@@ -11,7 +11,16 @@ elif db_url.startswith("postgresql://"):
 engine = create_async_engine(
     db_url,
     echo=True,
-    future=True
+    future=True,
+    pool_size=5,
+    max_overflow=10,
+    pool_pre_ping=True,       # Har so'rovda connection tirikligini tekshiradi
+    pool_recycle=300,          # 5 daqiqada bir connection yangilanadi
+    connect_args={
+        "server_settings": {
+            "application_name": "midas_api"
+        }
+    }
 )
 
 SessionLocal = async_sessionmaker(
