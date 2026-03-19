@@ -490,7 +490,7 @@ const MobileAssetForm = () => {
       </div>
 
       {/* Fixed Bottom Action */}
-      <div className="fixed bottom-0 left-0 right-0 p-4 bg-brand-bg/90 backdrop-blur-lg border-t border-brand-border flex space-x-3">
+      <div className="fixed bottom-[72px] left-0 right-0 p-4 bg-brand-bg/90 backdrop-blur-lg border-t border-brand-border flex space-x-3 z-40">
         {currentStep > 1 && (
           <button 
             onClick={prevStep}
