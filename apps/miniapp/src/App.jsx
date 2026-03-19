@@ -178,38 +178,18 @@ function App() {
         const rawApiUrl = import.meta.env.VITE_API_URL || 'https://api-production-35ba.up.railway.app';
         const API_BASE = rawApiUrl.endsWith('/api/v1') ? rawApiUrl : `${rawApiUrl}/api/v1`;
         
-        let reqBody;
-        if (isTelegramEnvironment) {
-          // Send to telegram endpoint (requires hash verification on backend)
-          // Wait, the backend /auth/telegram expects a JSON payload matching TelegramLoginData
-          // But actually initData is a query string block, so parsing it is needed if backend expects JSON.
-          // Since our backend expects: { id, first_name, last_name, username, photo_url, auth_date, hash }
-          // Let's parse initData:
-          const urlParams = new URLSearchParams(initData);
-          const userStr = urlParams.get('user');
-          if (userStr) {
-            const userObj = JSON.parse(decodeURIComponent(userStr));
-            reqBody = {
-              id: userObj.id,
-              first_name: userObj.first_name,
-              last_name: userObj.last_name || "",
-              username: userObj.username || "",
-              photo_url: userObj.photo_url || "",
-              auth_date: parseInt(urlParams.get('auth_date') || "0"),
-              hash: urlParams.get('hash') || ""
-            };
-          }
-        } 
-        
-        if (reqBody && reqBody.hash) {
-          const res = await fetch(`${API_BASE}/auth/telegram`, {
+        if (isTelegramEnvironment && initData) {
+          // Raw initData ni to'g'ridan backendga yuborish - eng ishonchli usul
+          const res = await fetch(`${API_BASE}/auth/telegram-webapp`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(reqBody)
+            body: JSON.stringify({ init_data: initData })
           });
           if (res.ok) {
             const data = await res.json();
             localStorage.setItem('token', data.access_token);
+          } else {
+            console.error('Telegram auth failed:', await res.text());
           }
         } else if (!isTelegramEnvironment && import.meta.env.DEV) {
           // Fallback for Local Browser Testing
