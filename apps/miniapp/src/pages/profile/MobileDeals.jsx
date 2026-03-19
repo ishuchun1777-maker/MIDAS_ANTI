@@ -1,132 +1,134 @@
-import React, { useState, useEffect } from 'react';
-import { ArrowLeft, Clock, CheckCircle2, XCircle, MoreVertical, Briefcase } from 'lucide-react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { dealApi, offerApi } from '../../api.js';
 
-// API integrated
-
-const MobileDeals = () => {
+export default function MobileDeals({ profile }) {
   const navigate = useNavigate();
   const [deals, setDeals] = useState([]);
+  const [offers, setOffers] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [tab, setTab] = useState('offers');
 
-  useEffect(() => {
-    const fetchDeals = async () => {
-      try {
-        const token = localStorage.getItem('token');
-        const rawUrl = import.meta.env.VITE_API_URL || 'https://api-production-35ba.up.railway.app';
-        const = = rawUrl.endsWith('/api/v1') ? rawUrl : `${rawUrl}/api/v1`;
-        const res = await fetch(`${API_BASE_URL}/deals/`, {
-          headers: { 'Authorization': `Bearer ${token}` }
-        });
-        if (res.ok) {
-          const data = await res.json();
-          setDeals(data);
-        }
-      } catch (err) {
-        console.error(err);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchDeals();
-  }, []);
+  useEffect(() => { load(); }, []);
 
-  const getStatusColor = (status) => {
-    switch(status) {
-      case 'IN_PROGRESS': return 'text-amber-500 bg-amber-500/10 border-amber-500/30';
-      case 'COMPLETED': return 'text-green-500 bg-green-500/10 border-green-500/30';
-      case 'CANCELLED': return 'text-red-500 bg-red-500/10 border-red-500/30';
-      default: return 'text-gray-500 bg-gray-500/10 border-gray-500/30';
+  const load = async () => {
+    try {
+      const [d, o] = await Promise.all([
+        dealApi.getAll().catch(() => []),
+        offerApi.getAll().catch(() => []),
+      ]);
+      setDeals(Array.isArray(d) ? d : []);
+      setOffers(Array.isArray(o) ? o : []);
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setLoading(false);
     }
   };
 
-  const getStatusIcon = (status) => {
-    switch(status) {
-      case 'IN_PROGRESS': return <Clock className="w-4 h-4 mr-1.5" />;
-      case 'COMPLETED': return <CheckCircle2 className="w-4 h-4 mr-1.5" />;
-      case 'CANCELLED': return <XCircle className="w-4 h-4 mr-1.5" />;
-      default: return null;
+  const handleOffer = async (id, action) => {
+    try {
+      if (action === 'accept') await offerApi.accept(id);
+      if (action === 'reject') await offerApi.reject(id);
+      load();
+    } catch (e) {
+      alert(e.message);
     }
   };
 
-  const getStatusText = (status) => {
-    switch(status) {
-      case 'IN_PROGRESS': return 'Jarayonda';
-      case 'COMPLETED': return 'Yakunlangan';
-      case 'CANCELLED': return 'Bekor qilingan';
-      default: return status;
-    }
+  const statusColor = {
+    pending: 'text-yellow-400',
+    accepted: 'text-green-400',
+    rejected: 'text-red-400',
+    IN_PROGRESS: 'text-blue-400',
+    COMPLETED: 'text-green-400',
   };
 
   return (
-    <div className="bg-brand-bg min-h-screen pb-24">
-      {/* Header */}
-      <div className="bg-brand-bg/90 backdrop-blur-md p-4 sticky top-0 z-30 border-b border-brand-border flex items-center shadow-lg">
-        <button onClick={() => navigate(-1)} className="p-2 -ml-2 text-brand-text active:scale-90 transition-transform hover:bg-brand-card rounded-full">
-          <ArrowLeft className="w-6 h-6" />
-        </button>
-        <h1 className="text-xl font-black text-brand-text ml-4 tracking-tight flex items-center">
-          <Briefcase className="w-5 h-5 mr-2 text-brand-primary" />
-          Mening Kelishuvlarim
-        </h1>
+    <div className="min-h-screen bg-[#0a0a0a] text-white px-4 py-6">
+      <button onClick={() => navigate('/')} className="text-gray-400 text-sm mb-4">← Orqaga</button>
+      <h1 className="text-xl font-black mb-4">Offerlar & Deallar</h1>
+
+      {/* Tabs */}
+      <div className="flex gap-2 mb-5">
+        {['offers', 'deals'].map(t => (
+          <button
+            key={t}
+            onClick={() => setTab(t)}
+            className={`px-4 py-2 rounded-xl text-sm font-bold transition-all ${
+              tab === t ? 'bg-yellow-400 text-black' : 'bg-white/10 text-gray-400'
+            }`}
+          >
+            {t === 'offers' ? `Offerlar (${offers.length})` : `Deallar (${deals.length})`}
+          </button>
+        ))}
       </div>
 
-      <div className="p-4 space-y-4">
-        {loading ? (
-          <div className="flex flex-col items-center justify-center p-12 text-brand-muted">
-            <div className="w-8 h-8 border-4 border-brand-primary border-t-transparent rounded-full animate-spin mb-4"></div>
-            <p className="font-bold text-sm">Kelishuvlar yuklanmoqda...</p>
-          </div>
-        ) : deals.length === 0 ? (
-          <div className="bg-brand-card rounded-3xl p-8 text-center border border-brand-border shadow-[0_4px_20px_rgba(0,0,0,0.2)] mt-8">
-            <Briefcase className="w-16 h-16 mx-auto text-brand-muted opacity-20 mb-4" />
-            <h3 className="text-lg font-black text-brand-text mb-2">Kelishuvlar yo'q</h3>
-            <p className="text-brand-muted text-sm font-medium">Sizda hozircha hech qanday faol kelishuv yoki tranzaksiya mavjud emas.</p>
-          </div>
-        ) : (
-          deals.map(deal => (
-            <div key={deal.id} className="bg-brand-card rounded-2xl p-5 shadow-[0_4px_20px_rgba(0,0,0,0.2)] border border-brand-border active:scale-[0.98] transition-all hover:border-brand-primary/50">
-              <div className="flex justify-between items-start mb-4">
-                <div className={`px-3 py-1.5 rounded-xl font-bold text-[10px] flex items-center uppercase tracking-wider border ${getStatusColor(deal.status)}`}>
-                  {getStatusIcon(deal.status)}
-                  {getStatusText(deal.status)}
-                </div>
-                <button className="text-brand-muted p-1 bg-brand-bg hover:bg-brand-border rounded-full transition-colors">
-                  <MoreVertical className="w-5 h-5" />
-                </button>
-              </div>
-              
-              <div className="mb-4">
-                <h3 className="font-black text-lg text-brand-text truncate pr-4">{deal.media_asset?.title || 'Unknown'}</h3>
-                <p className="text-[10px] font-bold text-brand-muted uppercase tracking-widest mt-1">Platforma: <span className="text-brand-primary">{deal.media_asset?.media_type || 'Platform'}</span></p>
-              </div>
-              
-              <div className="bg-brand-bg rounded-xl p-4 mb-4 flex justify-between items-center border border-brand-border">
-                <div className="text-xs text-brand-muted font-black uppercase tracking-wider">Kelishilgan narx:</div>
-                <div className="text-xl font-black text-brand-text">${deal.price.toLocaleString()}</div>
-              </div>
+      {loading && (
+        <div className="flex justify-center pt-10">
+          <div className="w-8 h-8 border-2 border-yellow-400 border-t-transparent rounded-full animate-spin" />
+        </div>
+      )}
 
-              <div className="flex items-center justify-between pt-4 border-t border-brand-border">
-                <div className="flex items-center">
-                  <div className="w-8 h-8 rounded-full bg-brand-primary text-black flex items-center justify-center font-bold text-xs ring-2 ring-brand-card shadow-lg z-10">
-                    {deal.buyer?.full_name?.[0] || 'B'}
-                  </div>
-                  <div className="w-8 h-8 rounded-full bg-brand-border text-brand-text flex items-center justify-center font-bold text-xs -ml-2 ring-2 ring-brand-card shadow-lg">
-                    {deal.seller?.full_name?.[0] || 'S'}
-                  </div>
+      {/* Offers */}
+      {!loading && tab === 'offers' && (
+        <div className="space-y-3">
+          {offers.length === 0 && (
+            <p className="text-gray-400 text-center text-sm pt-10">Offer yo'q</p>
+          )}
+          {offers.map(offer => (
+            <div key={offer.id} className="bg-white/5 border border-white/10 rounded-2xl p-4">
+              <div className="flex justify-between items-start mb-3">
+                <div>
+                  <p className="font-bold text-sm">${offer.price}</p>
+                  <p className="text-gray-400 text-xs mt-1">{offer.deliverables_summary || '—'}</p>
                 </div>
-                {deal.status === 'IN_PROGRESS' && (
-                  <button onClick={() => navigate(`/messages/${deal.id}`)} className="text-xs font-bold bg-brand-primary/10 text-brand-primary border border-brand-primary/20 px-4 py-2 rounded-[12px] shadow-lg active:scale-95 transition-all hover:bg-brand-primary hover:text-black">
-                    Chatni ochish
+                <span className={`text-xs font-bold ${statusColor[offer.status] || 'text-gray-400'}`}>
+                  {offer.status}
+                </span>
+              </div>
+              {offer.status === 'pending' && offer.receiver_user_id === profile?.user_id && (
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => handleOffer(offer.id, 'accept')}
+                    className="flex-1 py-2 bg-green-500/20 text-green-400 font-bold rounded-xl text-sm active:scale-95"
+                  >
+                    Qabul
                   </button>
-                )}
+                  <button
+                    onClick={() => handleOffer(offer.id, 'reject')}
+                    className="flex-1 py-2 bg-red-500/20 text-red-400 font-bold rounded-xl text-sm active:scale-95"
+                  >
+                    Rad
+                  </button>
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* Deals */}
+      {!loading && tab === 'deals' && (
+        <div className="space-y-3">
+          {deals.length === 0 && (
+            <p className="text-gray-400 text-center text-sm pt-10">Deal yo'q</p>
+          )}
+          {deals.map(deal => (
+            <div key={deal.id} className="bg-white/5 border border-white/10 rounded-2xl p-4">
+              <div className="flex justify-between items-center">
+                <div>
+                  <p className="font-bold text-sm">${deal.price}</p>
+                  <p className="text-gray-400 text-xs mt-1">Deal #{deal.id?.slice(0,8)}</p>
+                </div>
+                <span className={`text-xs font-bold ${statusColor[deal.status] || 'text-gray-400'}`}>
+                  {deal.status}
+                </span>
               </div>
             </div>
-          ))
-        )}
-      </div>
+          ))}
+        </div>
+      )}
     </div>
   );
-};
-
-export default MobileDeals;
+}

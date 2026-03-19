@@ -1,104 +1,94 @@
-import React, { useState, useEffect } from 'react';
-import { Package, Plus, ChevronRight, Search as SearchIcon, ShieldCheck } from 'lucide-react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { inventoryApi } from '../../api.js';
 
-const MobileInventoryList = () => {
+export default function MobileInventoryList({ sellerId }) {
   const navigate = useNavigate();
   const [assets, setAssets] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
 
-  useEffect(() => {
-    const fetchAssets = async () => {
-      try {
-        const token = localStorage.getItem('token');
-        const rawApiUrl = import.meta.env.VITE_API_URL || 'https://api-production-35ba.up.railway.app';
-        const API_BASE_URL = rawApiUrl.endsWith('/api/v1') ? rawApiUrl : `${rawApiUrl}/api/v1`;
-        const res = await fetch(`${API_BASE_URL}/inventory/assets/mine`, {
-          headers: {
-            'Authorization': `Bearer ${token}`
-          }
-        });
-        if (res.ok) {
-          const data = await res.json();
-          // Map to match UI expected fields if necessary, or pass raw
-          setAssets(data);
-        } else {
-          console.error("Failed to fetch assets");
-        }
-      } catch (err) {
-        console.error(err);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchAssets();
-  }, []);
+  useEffect(() => { load(); }, []);
+
+  const load = async () => {
+    try {
+      const data = await inventoryApi.getMyAssets();
+      setAssets(Array.isArray(data) ? data : []);
+    } catch (e) {
+      setError(e.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const typeLabel = {
+    instagram: 'Instagram', tiktok: 'TikTok', youtube: 'YouTube',
+    telegram_channel: 'Telegram', billboard: 'Billboard', led_monitor: 'LED',
+    website: 'Website', other: 'Boshqa',
+  };
 
   return (
-    <div className="pb-20 bg-brand-bg min-h-screen">
-      {/* Header */}
-      <div className="p-4 flex justify-between items-center sticky top-0 bg-brand-bg/90 backdrop-blur-md z-10 border-b border-brand-border">
-        <h1 className="text-xl font-extrabold text-brand-text tracking-tight">Mening Assetlarim</h1>
-        <button 
-          onClick={() => navigate('/seller/inventory/create')}
-          className="w-10 h-10 bg-brand-primary text-black rounded-full flex items-center justify-center shadow-lg shadow-brand-primary/20 active:scale-90 transition-transform hover:bg-brand-primary/90"
+    <div className="min-h-screen bg-[#0a0a0a] text-white px-4 py-6">
+      <div className="flex items-center justify-between mb-6">
+        <div>
+          <button onClick={() => navigate('/')} className="text-gray-400 text-sm mb-1">← Orqaga</button>
+          <h1 className="text-xl font-black">Mening assetlarim</h1>
+        </div>
+        <button
+          onClick={() => navigate('/seller/asset/new')}
+          className="bg-yellow-400 text-black font-bold px-4 py-2 rounded-xl text-sm active:scale-95"
         >
-          <Plus className="w-6 h-6" />
+          + Yangi
         </button>
       </div>
 
-      {/* Search Bar */}
-      <div className="px-4 mb-4 mt-2">
-        <div className="relative">
-          <SearchIcon className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-brand-muted" />
-          <input 
-            type="text" 
-            placeholder="Qidirish..." 
-            className="w-full bg-brand-card text-brand-text border border-brand-border rounded-xl py-3 pl-12 pr-4 text-sm focus:ring-2 focus:ring-brand-primary outline-none focus:border-transparent transition-all placeholder-brand-muted/50 shadow-inner"
-          />
+      {loading && (
+        <div className="flex justify-center pt-20">
+          <div className="w-8 h-8 border-2 border-yellow-400 border-t-transparent rounded-full animate-spin" />
         </div>
-      </div>
+      )}
 
-      {/* List */}
-      <div className="px-4 space-y-3">
-        {loading ? (
-          Array(3).fill(0).map((_, i) => (
-            <div key={i} className="h-24 bg-brand-card border border-brand-border opacity-50 animate-pulse rounded-2xl"></div>
-          ))
-        ) : assets.length === 0 ? (
-          <div className="py-20 text-center">
-            <Package className="w-12 h-12 text-brand-muted opacity-50 mx-auto mb-3" />
-            <p className="text-brand-muted font-bold">Hali assetlar yo'q</p>
-          </div>
-        ) : (
-          assets.map((asset) => (
-            <div 
-              key={asset.id} 
-              className="bg-brand-card p-4 rounded-2xl border border-brand-border flex items-center justify-between active:scale-[0.98] active:bg-brand-bg transition-all hover:border-brand-primary/50 shadow-[0_4px_20px_rgba(0,0,0,0.1)] group"
-            >
-              <div className="flex items-center space-x-4">
-                <div className="w-12 h-12 bg-brand-primary/10 rounded-xl flex items-center justify-center text-brand-primary border border-brand-primary/20">
-                  <Package className="w-6 h-6" />
-                </div>
-                <div>
-                  <h3 className="font-bold text-brand-text line-clamp-1">{asset.title}</h3>
-                  <div className="flex items-center space-x-2 mt-0.5">
-                    <span className="text-[10px] font-bold text-brand-muted uppercase tracking-wider">{asset.media_type.replace('_', ' ')}</span>
-                    <span className="text-xs text-brand-border">•</span>
-                    <span className="text-[10px] font-bold text-brand-muted uppercase tracking-wider">{asset.reach} reach</span>
-                  </div>
-                </div>
+      {error && <p className="text-red-400 text-center text-sm">{error}</p>}
+
+      {!loading && assets.length === 0 && (
+        <div className="text-center pt-20">
+          <p className="text-4xl mb-4">📦</p>
+          <p className="text-gray-400 text-sm">Hali asset yo'q</p>
+          <button
+            onClick={() => navigate('/seller/asset/new')}
+            className="mt-4 bg-yellow-400 text-black font-bold px-6 py-3 rounded-2xl text-sm"
+          >
+            Birinchi asset qo'shish
+          </button>
+        </div>
+      )}
+
+      <div className="space-y-3">
+        {assets.map((asset) => (
+          <div
+            key={asset.id}
+            onClick={() => navigate(`/seller/asset/${asset.id}/edit`)}
+            className="bg-white/5 border border-white/10 rounded-2xl p-4 active:scale-95 transition-all cursor-pointer"
+          >
+            <div className="flex items-start justify-between">
+              <div className="flex-1">
+                <p className="font-bold text-sm">{asset.title}</p>
+                <p className="text-gray-400 text-xs mt-1">{typeLabel[asset.media_type] || asset.media_type}</p>
               </div>
-              <div className="flex items-center space-x-2">
-                {asset.status === 'verified' && <ShieldCheck className="w-4 h-4 text-green-500" />}
-                <ChevronRight className="w-5 h-5 text-brand-muted/50 group-hover:text-brand-primary transition-colors" />
-              </div>
+              <span className={`text-xs px-2 py-1 rounded-lg font-bold ${
+                asset.status === 'published'
+                  ? 'bg-green-400/20 text-green-400'
+                  : 'bg-yellow-400/20 text-yellow-400'
+              }`}>
+                {asset.status === 'published' ? 'Aktiv' : 'Draft'}
+              </span>
             </div>
-          ))
-        )}
+            {asset.social_link && (
+              <p className="text-gray-500 text-xs mt-2 truncate">{asset.social_link}</p>
+            )}
+          </div>
+        ))}
       </div>
     </div>
   );
-};
-
-export default MobileInventoryList;
+}
