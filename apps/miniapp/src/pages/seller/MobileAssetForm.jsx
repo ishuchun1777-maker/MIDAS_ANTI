@@ -294,7 +294,7 @@ const MobileAssetForm = () => {
         </div>
 
         {/* Form Steps */}
-        <div className="animate-in slide-in-from-right-4 duration-300">
+        <div className="animate-in slide-in-from-right-4 duration-300 pb-32">
           
           {/* Step 1: Media Type */}
           {currentStep === 1 && (
