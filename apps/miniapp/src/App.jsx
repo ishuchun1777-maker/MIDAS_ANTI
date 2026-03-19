@@ -16,7 +16,7 @@ function Messages() { return <div className="p-6 pb-24 bg-brand-bg min-h-screen"
 const RoleGate = ({ children, requiredRole }) => {
   const profileIdKey = requiredRole + '_profile_id';
   const profileId = localStorage.getItem(profileIdKey);
-  if (!profileId && profileId !== "undefined") {
+  if (!profileId || profileId === "undefined" || profileId === "null") {
     // Redirect logic
     return (
       <div className="bg-brand-bg min-h-screen pb-24 flex items-center justify-center p-6 text-center">
@@ -175,7 +175,8 @@ function App() {
       }
       
       try {
-        const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:8000/api/v1';
+        const rawApiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+        const API_BASE = rawApiUrl.endsWith('/api/v1') ? rawApiUrl : `${rawApiUrl}/api/v1`;
         
         let reqBody;
         if (isTelegramEnvironment) {

@@ -13,10 +13,12 @@ from app.schemas.user import Token, LoginCredentials, TelegramLoginData
 router = APIRouter()
 
 def verify_telegram_authorization(data: dict) -> bool:
+    data = data.copy()  # Original dict ni o'zgartirmaslik uchun copy
     received_hash = data.pop('hash', None)
     if not received_hash:
         return False
-    data_check_arr = [f"{k}={v}" for k, v in data.items() if v is not None]
+    # None qiymatlarni va bo'sh stringlarni filtrlash
+    data_check_arr = [f"{k}={v}" for k, v in data.items() if v is not None and v != ""]
     data_check_string = "\n".join(sorted(data_check_arr))
     secret_key = hashlib.sha256(settings.TELEGRAM_BOT_TOKEN.encode()).digest()
     hash_calc = hmac.new(secret_key, msg=data_check_string.encode(), digestmod=hashlib.sha256).hexdigest()
