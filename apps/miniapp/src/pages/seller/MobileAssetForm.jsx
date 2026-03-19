@@ -489,24 +489,24 @@ const MobileAssetForm = () => {
         </div>
       </div>
 
-      {/* Fixed Bottom Action */}
-      <div className="fixed bottom-[72px] left-0 right-0 p-4 bg-brand-bg/90 backdrop-blur-lg border-t border-brand-border flex space-x-3 z-40">
-        {currentStep > 1 && (
+      {/* Fixed Bottom Action - faqat step 5 da */}
+      {currentStep === 5 && (
+        <div className="fixed bottom-[72px] left-0 right-0 p-4 bg-brand-bg/90 backdrop-blur-lg border-t border-brand-border flex space-x-3 z-40">
           <button 
             onClick={prevStep}
             className="flex-1 py-4 bg-brand-card text-brand-text border border-brand-border rounded-2xl font-black transition-all active:scale-95"
           >
             {t.previous}
           </button>
-        )}
-        <button 
-          onClick={currentStep === 5 ? handleCreate : nextStep}
-          disabled={isLoading}
-          className={`flex-[2] py-4 bg-brand-primary text-black rounded-2xl font-black shadow-lg shadow-brand-primary/20 transition-all active:scale-95 ${isLoading ? 'opacity-50 grayscale' : ''}`}
-        >
-          {isLoading ? '...' : (currentStep === 5 ? t.finish : t.next)}
-        </button>
-      </div>
+          <button 
+            onClick={handleCreate}
+            disabled={isLoading}
+            className={`flex-[2] py-4 bg-brand-primary text-black rounded-2xl font-black shadow-lg shadow-brand-primary/20 transition-all active:scale-95 ${isLoading ? 'opacity-50 grayscale' : ''}`}
+          >
+            {isLoading ? '...' : t.finish}
+          </button>
+        </div>
+      )}
     </div>
   );
 };
