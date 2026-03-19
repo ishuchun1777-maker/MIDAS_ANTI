@@ -1,0 +1,12 @@
+[phases.setup]
+nixPkgs = ["nodejs"]
+
+[phases.build]
+cmds = [
+  "npm install",
+  "echo VITE_API_URL=https://api-production-35ba.up.railway.app > .env",
+  "npm run build"
+]
+
+[start]
+cmd = "npm run start"
