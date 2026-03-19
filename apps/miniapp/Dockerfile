@@ -7,7 +7,7 @@ RUN npm install --legacy-peer-deps
 
 COPY . .
 
-# Cache bust: v3
+# Cache bust: v4
 RUN rm -rf dist
 
 ARG VITE_API_URL=https://api-production-35ba.up.railway.app
