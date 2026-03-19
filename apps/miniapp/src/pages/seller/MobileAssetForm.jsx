@@ -263,7 +263,7 @@ const MobileAssetForm = () => {
   };
 
   return (
-    <div className="bg-brand-bg min-h-screen pb-24 text-brand-text">
+    <div className="bg-brand-bg min-h-screen pb-48 text-brand-text">
       {/* Mobile Top Bar */}
       <div className="p-4 flex items-center justify-between border-b border-brand-border bg-brand-bg/90 backdrop-blur-lg sticky top-0 z-50">
         <div className="flex items-center">
@@ -294,7 +294,7 @@ const MobileAssetForm = () => {
         </div>
 
         {/* Form Steps */}
-        <div className="animate-in slide-in-from-right-4 duration-300 pb-32">
+        <div className="animate-in slide-in-from-right-4 duration-300 pb-40">
           
           {/* Step 1: Media Type */}
           {currentStep === 1 && (
