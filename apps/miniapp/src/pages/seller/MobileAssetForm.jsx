@@ -167,8 +167,11 @@ const MobileAssetForm = () => {
 
   const validateLink = (link) => {
     if (!link) return true;
-    const regex = /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$|^@[\w]+$/;
-    return regex.test(link);
+    // Accept: URLs (https://...), t.me/username, @username, plain usernames
+    const urlRegex = /^(https?:\/\/)[\w\-]+(\.[\w\-]+)+(\/[\w\-._~:/?#[\]@!$&'()*+,;=%]*)?$/;
+    const tmeRegex = /^t\.me\/[\w]+$/;
+    const usernameRegex = /^@?[\w.]+$/;
+    return urlRegex.test(link) || tmeRegex.test(link) || usernameRegex.test(link);
   };
 
   const validateStep = (s) => {
@@ -469,13 +472,18 @@ const MobileAssetForm = () => {
           {currentStep === 5 && (
             <div className="space-y-6">
               <h2 className="text-2xl font-black text-brand-text">{t.portfolio}</h2>
-              <div className="border-2 border-dashed border-brand-border rounded-3xl p-10 text-center bg-brand-card transition-all hover:border-brand-primary/50">
+              <label className="border-2 border-dashed border-brand-border rounded-3xl p-10 text-center bg-brand-card transition-all hover:border-brand-primary/50 cursor-pointer block active:scale-95">
                 <ImageIcon className="w-10 h-10 text-brand-muted mx-auto mb-3" />
                 <p className="text-xs font-bold text-brand-muted mb-4">{t.upload}</p>
                 <div className="px-6 py-2 bg-brand-bg rounded-xl text-xs font-black text-brand-text border border-brand-border inline-block shadow-inner hover:bg-brand-border transition-colors">
                   {t.upload}
                 </div>
-              </div>
+                <input type="file" accept="image/*" className="hidden" onChange={(e) => {
+                  const file = e.target.files?.[0];
+                  if (file) alert('Rasm tanlandi: ' + file.name + ' (keyingi versiyada upload qilinadi)');
+                }} />
+              </label>
+              <p className="text-center text-xs text-brand-muted font-medium">Portfolio rasmi ixtiyoriy — keyinroq ham qo'shishingiz mumkin</p>
             </div>
           )}
         </div>
