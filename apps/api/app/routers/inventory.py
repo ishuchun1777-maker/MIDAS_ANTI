@@ -33,8 +33,21 @@ async def create_asset(
     db_asset = MediaAsset(**asset_in.model_dump())
     db.add(db_asset)
     await db.commit()
-    await db.refresh(db_asset)
-    return db_asset
+    
+    # Relationship'lar bilan qayta yuklash
+    result = await db.execute(
+        select(MediaAsset)
+        .options(
+            selectinload(MediaAsset.regions),
+            selectinload(MediaAsset.formats),
+            selectinload(MediaAsset.pricing),
+            selectinload(MediaAsset.audience),
+            selectinload(MediaAsset.social_details),
+            selectinload(MediaAsset.outdoor_details),
+        )
+        .filter(MediaAsset.id == db_asset.id)
+    )
+    return result.scalars().first()
 
 @router.get("/assets/mine", response_model=list[MediaAssetResponse])
 async def get_my_assets(
