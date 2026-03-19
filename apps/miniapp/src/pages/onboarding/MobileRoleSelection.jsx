@@ -7,7 +7,7 @@ const MobileRoleSelection = ({ onRoleSelected }) => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [selectedRole, setSelectedRole] = useState(null);
-  const rawApiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+  const rawApiUrl = import.meta.env.VITE_API_URL || 'https://api-production-35ba.up.railway.app';
   const API_BASE_URL = rawApiUrl.endsWith('/api/v1') ? rawApiUrl : `${rawApiUrl}/api/v1`;
 
   const ROLES = [

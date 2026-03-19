@@ -175,7 +175,7 @@ function App() {
       }
       
       try {
-        const rawApiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+        const rawApiUrl = import.meta.env.VITE_API_URL || 'https://api-production-35ba.up.railway.app';
         const API_BASE = rawApiUrl.endsWith('/api/v1') ? rawApiUrl : `${rawApiUrl}/api/v1`;
         
         let reqBody;
